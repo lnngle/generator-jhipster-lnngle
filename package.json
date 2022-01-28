@@ -54,6 +54,7 @@
     "release:major": "npm version major -a -m \"Update to %s\" && npm run release"
   },
   "license": "Apache-2.0",
+
   "bugs": {
     "url": "https://github.com/lnngle/generator-jhipster-lnngle/issues"
   },
