@@ -1,6 +1,5 @@
 module.exports = {
-    askForClient,
-    askForClientSideOpts,
+    askForClient
 };
 
 function askForClient(meta) {
@@ -10,22 +9,18 @@ function askForClient(meta) {
 
     const choices = [
         {
-            value: 'vue',
-            name: 'VueJS',
+            value: 'alain',
+            name: 'ng-alain',
         },
     ];
 
     const PROMPT = {
         type: 'list',
         name: 'clientFramework',
-        when: response => applicationType !== 'microservice' && applicationType !== 'uaa',
-        message: response =>
-            this.getNumberedQuestion(
-                'Which *Framework* would you like to use for the client?',
-                applicationType !== 'microservice' && applicationType !== 'uaa'
-            ),
+        when: () => applicationType !== 'microservice' && applicationType !== 'uaa',
+        message: () => 'Which *Framework* would you like to use for the client?',
         choices,
-        default: 'vue',
+        default: 'alain',
     };
 
     if (meta) return PROMPT; // eslint-disable-line consistent-return
@@ -34,24 +29,6 @@ function askForClient(meta) {
 
     this.prompt(PROMPT).then(prompt => {
         this.clientFramework = prompt.clientFramework;
-        done();
-    });
-}
-
-function askForClientSideOpts() {
-    if (this.existingProject) return;
-
-    const done = this.async();
-    const prompts = [
-        {
-            type: 'confirm',
-            name: 'useSass',
-            message: response => this.getNumberedQuestion('Would you like to use the LibSass stylesheet preprocessor for your CSS?', true),
-            default: false,
-        },
-    ];
-    this.prompt(prompts).then(props => {
-        this.useSass = props.useSass;
         done();
     });
 }
