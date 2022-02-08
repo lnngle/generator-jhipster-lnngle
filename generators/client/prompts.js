@@ -1,6 +1,6 @@
 module.exports = {
     askForClient,
-    askForClientSideOpts
+    askForClientSideOpts,
 };
 
 function askForClient(meta) {
@@ -11,8 +11,8 @@ function askForClient(meta) {
     const choices = [
         {
             value: 'vue',
-            name: 'VueJS'
-        }
+            name: 'VueJS',
+        },
     ];
 
     const PROMPT = {
@@ -25,7 +25,7 @@ function askForClient(meta) {
                 applicationType !== 'microservice' && applicationType !== 'uaa'
             ),
         choices,
-        default: 'vue'
+        default: 'vue',
     };
 
     if (meta) return PROMPT; // eslint-disable-line consistent-return
@@ -47,8 +47,8 @@ function askForClientSideOpts() {
             type: 'confirm',
             name: 'useSass',
             message: response => this.getNumberedQuestion('Would you like to use the LibSass stylesheet preprocessor for your CSS?', true),
-            default: false
-        }
+            default: false,
+        },
     ];
     this.prompt(prompts).then(props => {
         this.useSass = props.useSass;

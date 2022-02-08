@@ -2,12 +2,12 @@ const path = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
-describe('Subgenerator client of lnngle JHipster blueprint', () => {
+describe('Subgenerator common of lnngle JHipster blueprint', () => {
     describe('Sample test', () => {
         before(async function () {
             this.timeout(20000);
             return helpers
-                .create('jhipster:client')
+                .create('jhipster:common')
                 .withOptions({
                     fromCli: true,
                     skipInstall: true,
@@ -16,14 +16,14 @@ describe('Subgenerator client of lnngle JHipster blueprint', () => {
                 })
                 .withGenerators([
                     [
-                        require('generator-jhipster/generators/client'), // eslint-disable-line global-require
-                        'jhipster:client',
-                        require.resolve('generator-jhipster/generators/client'),
+                        require('generator-jhipster/generators/common'), // eslint-disable-line global-require
+                        'jhipster:common',
+                        require.resolve('generator-jhipster/generators/common'),
                     ],
                     [
-                        require('../generators/client'), // eslint-disable-line global-require
-                        'jhipster-lnngle:client',
-                        path.join(__dirname, '../generators/client/index.js'),
+                        require('../generators/common'), // eslint-disable-line global-require
+                        'jhipster-lnngle:common',
+                        path.join(__dirname, '../generators/common/index.js'),
                     ],
                 ])
                 .withPrompts({

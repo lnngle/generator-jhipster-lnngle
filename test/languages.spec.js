@@ -1,13 +1,17 @@
 const path = require('path');
+const fse = require('fs-extra');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
-describe('Subgenerator client of lnngle JHipster blueprint', () => {
+describe('Subgenerator languages of lnngle JHipster blueprint', () => {
     describe('Sample test', () => {
         before(async function () {
             this.timeout(20000);
             return helpers
-                .create('jhipster:client')
+                .create('jhipster:languages')
+                .inTmpDir(dir => {
+                    fse.copySync(path.join(__dirname, '../test/templates/ngx-blueprint'), dir);
+                })
                 .withOptions({
                     fromCli: true,
                     skipInstall: true,
@@ -16,14 +20,14 @@ describe('Subgenerator client of lnngle JHipster blueprint', () => {
                 })
                 .withGenerators([
                     [
-                        require('generator-jhipster/generators/client'), // eslint-disable-line global-require
-                        'jhipster:client',
-                        require.resolve('generator-jhipster/generators/client'),
+                        require('generator-jhipster/generators/languages'), // eslint-disable-line global-require
+                        'jhipster:languages',
+                        require.resolve('generator-jhipster/generators/languages'),
                     ],
                     [
-                        require('../generators/client'), // eslint-disable-line global-require
-                        'jhipster-lnngle:client',
-                        path.join(__dirname, '../generators/client/index.js'),
+                        require('../generators/languages'), // eslint-disable-line global-require
+                        'jhipster-lnngle:languages',
+                        path.join(__dirname, '../generators/languages/index.js'),
                     ],
                 ])
                 .withPrompts({

@@ -1,6 +1,6 @@
 # generator-jhipster-lnngle
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> JHipster blueprint, lnngle generator
+> JHipster blueprint, lnngle
 
 # Introduction
 
@@ -47,7 +47,7 @@ yarn global upgrade generator-jhipster-lnngle
 To use this blueprint, run the below command
 
 ```bash
-jhipster --blueprint lnngle
+jhipster --blueprints lnngle
 ```
 
 
@@ -64,7 +64,7 @@ cd lnngle
 npm link
 ```
 
-2. Link a development version of JHipster to your blueprint (optional: required only if you want to use a non-released JHipster version, like the master branch or your own custom fork)
+2. Link a development version of JHipster to your blueprint (optional: required only if you want to use a non-released JHipster version, like the main branch or your own custom fork)
 
 You could also use Yarn for this if you prefer
 
@@ -84,7 +84,7 @@ mkdir my-app && cd my-app
 npm link generator-jhipster-lnngle
 npm link generator-jhipster (Optional: Needed only if you are using a non-released JHipster version)
 
-jhipster -d --blueprint lnngle
+jhipster -d --blueprints lnngle
 
 ```
 
@@ -95,7 +95,7 @@ Apache-2.0 © [hong](https://github.com/lnngle/generator-jhipster-lnngle)
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-lnngle.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-lnngle
-[travis-image]: https://travis-ci.org/lnngle/generator-jhipster-lnngle.svg?branch=master
+[travis-image]: https://travis-ci.org/lnngle/generator-jhipster-lnngle.svg?branch=main
 [travis-url]: https://travis-ci.org/lnngle/generator-jhipster-lnngle
 [daviddm-image]: https://david-dm.org/lnngle/generator-jhipster-lnngle.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/lnngle/generator-jhipster-lnngle

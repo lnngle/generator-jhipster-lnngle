@@ -1,9 +1,8 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const ClientGenerator = require('generator-jhipster/generators/client');
-const writeFiles = require('./files').writeFiles;
+const PageGenerator = require('generator-jhipster/generators/page');
 
-module.exports = class extends ClientGenerator {
+module.exports = class extends PageGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
 
@@ -18,7 +17,7 @@ module.exports = class extends ClientGenerator {
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `ClientGenerator`
+         * Any method beginning with _ can be reused from the superclass `PageGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -58,20 +57,6 @@ module.exports = class extends ClientGenerator {
     }
 
     get prompting() {
-        // The prompting phase is being overriden so that we can ask our own questions
-        // return {
-        //     askForClient: prompts.askForClient,
-        //     askForClientSideOpts: prompts.askForClientSideOpts,
-
-        //     setSharedConfigOptions() {
-        //         this.configOptions.lastQuestion = this.currentQuestion;
-        //         this.configOptions.totalQuestions = this.totalQuestions;
-        //         this.configOptions.clientFramework = this.clientFramework;
-        //         this.configOptions.useSass = this.useSass;
-        //     }
-        // };
-        // If the prompts need to be overriden then use the code commented out above instead
-
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._prompting();
     }
@@ -102,15 +87,8 @@ module.exports = class extends ClientGenerator {
     }
 
     get writing() {
-        // The writing phase is being overriden so that we can write our own templates as well.
-        // If the templates doesnt need to be overrriden then just return `super._writing()` here
-        const phaseFromJHipster = super._writing();
-        const customPhaseSteps = {
-            writeAdditionalFile() {
-                writeFiles.call(this);
-            },
-        };
-        return Object.assign(phaseFromJHipster, customPhaseSteps);
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._writing();
     }
 
     get postWriting() {

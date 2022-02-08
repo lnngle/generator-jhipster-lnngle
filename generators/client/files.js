@@ -1,5 +1,5 @@
 module.exports = {
-    writeFiles
+    writeFiles,
 };
 
 function writeFiles() {
