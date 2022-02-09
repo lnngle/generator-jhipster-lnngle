@@ -1,0 +1,33 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DelonFormModule } from '@delon/form';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { SettingsAccountComponent } from './account.component';
+
+describe('SettingsAccountComponent', () => {
+  let component: SettingsAccountComponent;
+  let fixture: ComponentFixture<SettingsAccountComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule, DelonFormModule.forRoot()],
+        declarations: [SettingsAccountComponent],
+        providers: [NzMessageService, _HttpClient]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SettingsAccountComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

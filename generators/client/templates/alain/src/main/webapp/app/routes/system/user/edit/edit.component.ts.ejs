@@ -1,0 +1,78 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { I18NService } from '@core';
+import { SFSchema, SFUISchema } from '@delon/form';
+import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
+import { RoutesApi } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { map } from 'rxjs';
+
+@Component({
+  selector: 'app-system-user-edit',
+  templateUrl: './edit.component.html'
+})
+export class SystemUserEditComponent implements OnInit {
+  record: any = {};
+  i: any;
+  schema: SFSchema = {
+    properties: {
+      login: { type: 'string', title: this.i18n.fanyi('user.form.login') },
+      firstName: { type: 'string', title: this.i18n.fanyi('user.form.firstName') },
+      lastName: { type: 'string', title: this.i18n.fanyi('user.form.lastName') },
+      email: { type: 'string', title: this.i18n.fanyi('user.form.email') },
+      activated: { type: 'boolean', title: this.i18n.fanyi('user.form.activated'), default: true },
+      authorities: { type: 'string', title: this.i18n.fanyi('user.form.authorities') }
+    },
+    required: ['login']
+  };
+  ui: SFUISchema = {
+    '*': {},
+    $activated: {
+      widget: 'checkbox'
+    },
+    $authorities: {
+      widget: 'checkbox',
+      asyncData: () =>
+        this.http.get(RoutesApi.authorities).pipe(
+          map(res => {
+            let list: any[] = [];
+            for (const item of res) {
+              list.push({ value: item, label: item });
+            }
+            return list;
+          })
+        )
+    }
+  };
+
+  constructor(
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private modal: NzModalRef,
+    private msgSrv: NzMessageService,
+    public http: _HttpClient
+  ) {}
+
+  ngOnInit(): void {
+    if (this.record.id > 0) {
+      this.http.get(RoutesApi.users + this.record.login).subscribe(res => (this.i = res));
+    }
+  }
+
+  save(value: any): void {
+    if (this.record.id > 0) {
+      this.http.put(RoutesApi.users, value).subscribe(res => {
+        this.msgSrv.success(this.i18n.fanyi('global.messages.success.update'));
+        this.modal.close(true);
+      });
+    } else {
+      this.http.post(RoutesApi.users, value).subscribe(res => {
+        this.msgSrv.success(this.i18n.fanyi('global.messages.success.save'));
+        this.modal.close(true);
+      });
+    }
+  }
+
+  close(): void {
+    this.modal.destroy();
+  }
+}

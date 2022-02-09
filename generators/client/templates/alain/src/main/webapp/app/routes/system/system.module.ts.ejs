@@ -1,0 +1,15 @@
+import { NgModule, Type } from '@angular/core';
+import { SharedModule } from '@shared';
+
+import { SystemRoutingModule } from './system-routing.module';
+import { SystemUserEditComponent } from './user/edit/edit.component';
+import { SystemUserComponent } from './user/user.component';
+import { SystemUserViewComponent } from './user/view/view.component';
+
+const COMPONENTS: Array<Type<void>> = [SystemUserComponent, SystemUserEditComponent, SystemUserViewComponent];
+
+@NgModule({
+  imports: [SharedModule, SystemRoutingModule],
+  declarations: COMPONENTS
+})
+export class SystemModule {}

@@ -60,7 +60,7 @@ module.exports = class extends ClientGenerator {
 
     get prompting() {
         return {
-            askForClient: prompts.askForClient
+            askForClient: prompts.askForClient,
         };
     }
 
@@ -94,7 +94,7 @@ module.exports = class extends ClientGenerator {
         return {
             writeAdditionalFile() {
                 writeFiles.call(this);
-            }
+            },
         };
     }
 

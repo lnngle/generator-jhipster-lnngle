@@ -1,0 +1,31 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+
+import { HeaderI18nComponent } from './i18n.component';
+
+describe('HeaderI18nComponent', () => {
+  let component: HeaderI18nComponent;
+  let fixture: ComponentFixture<HeaderI18nComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule, RouterTestingModule],
+        declarations: [HeaderI18nComponent]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HeaderI18nComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

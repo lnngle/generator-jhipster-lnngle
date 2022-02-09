@@ -1,0 +1,61 @@
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const path = require('path');
+const { hashElement } = require('folder-hash');
+const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+module.exports = async (config, options, targetOptions) => {
+  const languagesHash = await hashElement(path.resolve(__dirname, 'src/main/webapp/assets/i18n'), {
+    algo: 'md5',
+    encoding: 'hex',
+    files: { include: ['*.json'] },
+  });
+
+  config.cache = {
+    // 1. Set cache type to filesystem
+    type: 'filesystem',
+    cacheDirectory: path.resolve(__dirname, './target/webpack'),
+    buildDependencies: {
+      // 2. Add your config as buildDependency to get cache invalidation on config change
+      config: [
+        __filename,
+        path.resolve(__dirname, 'webpack.custom.js'),
+        path.resolve(__dirname, './angular.json'),
+        path.resolve(__dirname, './tsconfig.app.json'),
+        path.resolve(__dirname, './tsconfig.json'),
+      ],
+    },
+  };
+
+  const patterns = [
+    // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
+  ];
+
+  if (patterns.length > 0) {
+    config.plugins.push(new CopyWebpackPlugin({ patterns }));
+  }
+
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      I18N_HASH: JSON.stringify(languagesHash.hash)
+    }),
+    new MergeJsonWebpackPlugin({
+      debug: false,
+      output: {
+        groupBy: [
+          { pattern: './src/main/webapp/assets/i18n/zh-cn/*.json', fileName: './assets/i18n/zh-cn.json' },
+          { pattern: './src/main/webapp/assets/i18n/en-us/*.json', fileName: './assets/i18n/en-us.json' },
+          // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
+        ],
+      },
+    })
+  );
+
+  config = merge(
+    config
+    // jhipster-needle-add-webpack-config - JHipster will add custom config
+  );
+
+  return config;
+};

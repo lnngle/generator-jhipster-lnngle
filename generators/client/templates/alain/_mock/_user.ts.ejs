@@ -1,0 +1,65 @@
+import { MockRequest } from '@delon/mock';
+
+const list: any[] = [
+  {
+    id: 1,
+    login: 'admin',
+    password_hash: '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC',
+    firstName: 'Administrator',
+    lastName: 'Administrator',
+    email: 'admin@localhost',
+    activated: true,
+    lang_key: 'zh-cn',
+    createdBy: 'system',
+    createdDate: '2022-01-17 11:11:11',
+    lastModifiedBy: 'system',
+    lastModifiedDate: '2022-01-17 11:11:11',
+    authorities: ['ROLE_USER', 'ROLE_ADMIN']
+  },
+  {
+    id: 2,
+    login: 'user',
+    password_hash: '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K',
+    firstName: 'User',
+    lastName: 'User',
+    email: 'user@localhost',
+    activated: true,
+    lang_key: 'zh-cn',
+    createdBy: 'system',
+    createdDate: '2022-01-17 11:11:11',
+    lastModifiedBy: 'system',
+    lastModifiedDate: '2022-01-17 11:11:11',
+    authorities: ['ROLE_USER']
+  }
+];
+
+function getAll(req: MockRequest): any[] {
+  return list;
+}
+
+function create(req: MockRequest) {
+  list.push(req.body);
+}
+
+function update(req: MockRequest) {
+  const value = req.body;
+  let update = list.find(item => item.login === value.login);
+  update = value;
+}
+
+function reomve(req: MockRequest) {
+  let index = list.findIndex(item => item.login === req.params.login);
+  list.splice(index, 1);
+}
+
+function get(req: MockRequest): any {
+  return list.find(item => item.login === req.params.login);
+}
+
+export const USERS = {
+  '/api/admin/users/': (req: MockRequest) => getAll(req),
+  'POST /api/admin/users/': (req: MockRequest) => create(req),
+  'PUT /api/admin/users/': (req: MockRequest) => update(req),
+  '/api/admin/users/:login': (req: MockRequest) => get(req),
+  'DELETE /api/admin/users/:login': (req: MockRequest) => reomve(req)
+};

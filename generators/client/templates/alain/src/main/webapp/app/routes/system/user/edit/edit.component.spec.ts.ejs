@@ -1,0 +1,36 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DelonFormModule } from '@delon/form';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+
+import { SystemUserEditComponent } from './edit.component';
+
+jest.mock('ng-zorro-antd/modal');
+
+describe('SystemUserEditComponent', () => {
+  let component: SystemUserEditComponent;
+  let fixture: ComponentFixture<SystemUserEditComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule, DelonFormModule.forRoot()],
+        declarations: [SystemUserEditComponent],
+        providers: [NzMessageService, NzModalRef, _HttpClient]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SystemUserEditComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

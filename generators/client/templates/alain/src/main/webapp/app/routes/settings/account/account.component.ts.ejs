@@ -1,0 +1,50 @@
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { I18NService } from '@core';
+import { SFSchema, SFUISchema } from '@delon/form';
+import { SettingsService, ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
+import { RoutesApi } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+@Component({
+  selector: 'app-settings-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class SettingsAccountComponent implements OnInit {
+  i: any;
+  schema: SFSchema = {
+    properties: {
+      firstName: { type: 'string', title: this.i18n.fanyi('user.form.firstName') },
+      lastName: { type: 'string', title: this.i18n.fanyi('user.form.lastName') },
+      email: { type: 'string', title: this.i18n.fanyi('user.form.email') }
+    }
+  };
+  ui: SFUISchema = {
+    '*': {}
+  };
+  loading = true;
+  constructor(
+    private cdr: ChangeDetectorRef,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    public http: _HttpClient,
+    private msg: NzMessageService,
+    private settingService: SettingsService
+  ) {}
+
+  ngOnInit(): void {
+    const user = this.settingService.user as any;
+    this.http.get(RoutesApi.users + user.login).subscribe(res => {
+      this.loading = false;
+      this.i = res;
+      this.cdr.detectChanges();
+    });
+  }
+
+  save(value: any): boolean {
+    this.http.post(RoutesApi.account, value).subscribe(res => {
+      this.msg.success(this.i18n.fanyi('global.messages.success.update'));
+    });
+    return false;
+  }
+}

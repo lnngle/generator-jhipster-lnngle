@@ -1,0 +1,32 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+
+import { HeaderSearchComponent } from './search.component';
+
+describe('HeaderSearchComponent', () => {
+  let component: HeaderSearchComponent;
+  let fixture: ComponentFixture<HeaderSearchComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [NzAutocompleteModule, HttpClientTestingModule, SharedModule, RouterTestingModule],
+        declarations: [HeaderSearchComponent]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HeaderSearchComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "target/out-tsc/spec",
+    "types": [
+      "jest",
+      "node"
+    ],
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "allowJs": true
+  },
+  "files": [
+    "src/main/webapp/polyfills.ts"
+  ],
+  "include": [
+    "src/main/webapp/**/*.spec.ts",
+    "src/main/webapp/**/*.d.ts"
+  ]
+}

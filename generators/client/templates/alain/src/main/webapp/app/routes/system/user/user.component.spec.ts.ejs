@@ -1,0 +1,33 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { SystemUserComponent } from './user.component';
+
+describe('SystemUserComponent', () => {
+  let component: SystemUserComponent;
+  let fixture: ComponentFixture<SystemUserComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule, RouterTestingModule],
+        declarations: [SystemUserComponent],
+        providers: [NzMessageService]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SystemUserComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

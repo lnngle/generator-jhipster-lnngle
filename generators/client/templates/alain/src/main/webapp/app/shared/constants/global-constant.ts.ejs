@@ -1,0 +1,16 @@
+export class TableConst {
+  static readonly paging = { pi: 'page', ps: 'size' };
+  static readonly resultConvert = { list: 'body', total: 'total' };
+}
+
+export class RoutesApi {
+  static readonly api_prefix = '/api';
+  static readonly login_path = '/passport/login';
+  static readonly register = `${RoutesApi.api_prefix}/register`;
+  static readonly auth_refresh = `${RoutesApi.api_prefix}/auth/refresh`;
+  static readonly authenticate = `${RoutesApi.api_prefix}/authenticate`;
+  static readonly account = `${RoutesApi.api_prefix}/account`;
+  static readonly account_change_password = `${RoutesApi.api_prefix}/account/change-password`;
+  static readonly authorities = `${RoutesApi.api_prefix}/authorities`;
+  static readonly users = `${RoutesApi.api_prefix}/admin/users/`;
+}

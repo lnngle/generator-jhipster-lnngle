@@ -1,0 +1,30 @@
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+
+import { LayoutBlankComponent } from './blank.component';
+
+describe('LayoutBlankComponent', () => {
+  let component: LayoutBlankComponent;
+  let fixture: ComponentFixture<LayoutBlankComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [SharedModule, RouterTestingModule],
+        declarations: [LayoutBlankComponent]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(LayoutBlankComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

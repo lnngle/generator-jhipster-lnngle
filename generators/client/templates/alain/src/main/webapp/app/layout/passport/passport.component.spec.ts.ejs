@@ -1,0 +1,33 @@
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { GlobalFooterModule } from '@delon/abc/global-footer';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+
+import { HeaderI18nComponent } from '../basic/widgets/i18n.component';
+import { LayoutPassportComponent } from './passport.component';
+
+describe('LayoutPassportComponent', () => {
+  let component: LayoutPassportComponent;
+  let fixture: ComponentFixture<LayoutPassportComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [GlobalFooterModule, HttpClientModule, SharedModule, RouterTestingModule],
+        declarations: [LayoutPassportComponent, HeaderI18nComponent]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(LayoutPassportComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

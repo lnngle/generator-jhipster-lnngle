@@ -1,0 +1,73 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { JWTGuard } from '@delon/auth';
+import { environment } from '@env/environment';
+
+// layout
+import { LayoutBasicComponent } from '../layout/basic/basic.component';
+import { LayoutPassportComponent } from '../layout/passport/passport.component';
+// dashboard pages
+import { DashboardComponent } from './dashboard/dashboard.component';
+// passport pages
+import { UserLoginComponent } from './passport/login/login.component';
+import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
+import { UserRegisterComponent } from './passport/register/register.component';
+import { SettingsAccountComponent } from './settings/account/account.component';
+import { SettingsPasswordComponent } from './settings/password/password.component';
+import { SettingsComponent } from './settings/settings.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: LayoutBasicComponent,
+    canActivate: [JWTGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        children: [
+          { path: '', redirectTo: 'account', pathMatch: 'full' },
+          {
+            path: 'account',
+            component: SettingsAccountComponent,
+            data: { titleI18n: 'global.action.changeAccount' }
+          },
+          {
+            path: 'password',
+            component: SettingsPasswordComponent,
+            data: { titleI18n: 'global.action.changePassword' }
+          }
+        ]
+      },
+      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
+      // 业务子模块
+      { path: 'system', loadChildren: () => import('./system/system.module').then(m => m.SystemModule) }
+    ]
+  },
+  {
+    path: 'passport',
+    component: LayoutPassportComponent,
+    children: [
+      { path: 'login', component: UserLoginComponent, data: { titleI18n: 'login.title' } },
+      { path: 'register', component: UserRegisterComponent, data: { title: '注册' } },
+      { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果' } }
+    ]
+  },
+  // 单页不包裹Layout
+  { path: '**', redirectTo: 'exception/404' }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: environment.useHash,
+      // NOTICE: If you use `reuse-tab` component and turn on keepingScroll you can set to `disabled`
+      // Pls refer to https://ng-alain.com/components/reuse-tab
+      scrollPositionRestoration: 'top'
+    })
+  ],
+  exports: [RouterModule]
+})
+export class RouteRoutingModule {}

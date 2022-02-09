@@ -1,0 +1,35 @@
+import { ChangeDetectionStrategy, Component, HostListener, Inject } from '@angular/core';
+import { I18NService } from '@core';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+
+@Component({
+  selector: 'header-clear-storage',
+  template: `
+    <i nz-icon nzType="tool"></i>
+    {{ 'global.menu.setting.clear.local.storage' | i18n }}
+  `,
+  host: {
+    '[class.flex-1]': 'true'
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class HeaderClearStorageComponent {
+  constructor(
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private modalSrv: NzModalService,
+    private messageSrv: NzMessageService
+  ) {}
+
+  @HostListener('click')
+  _click(): void {
+    this.modalSrv.confirm({
+      nzTitle: this.i18n.fanyi('global.messages.confirm.clear.local.storage'),
+      nzOnOk: () => {
+        localStorage.clear();
+        this.messageSrv.success(this.i18n.fanyi('global.messages.success.clear.local.storage'));
+      }
+    });
+  }
+}

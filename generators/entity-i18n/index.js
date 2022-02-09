@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const PageGenerator = require('generator-jhipster/generators/page');
+const EntityI18nGenerator = require('generator-jhipster/generators/entity-i18n');
 
-module.exports = class extends PageGenerator {
+module.exports = class extends EntityI18nGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
 

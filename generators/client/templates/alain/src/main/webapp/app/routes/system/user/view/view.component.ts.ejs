@@ -1,0 +1,23 @@
+import { Component, OnInit } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+import { RoutesApi } from '@shared';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+
+@Component({
+  selector: 'app-system-user-view',
+  templateUrl: './view.component.html'
+})
+export class SystemUserViewComponent implements OnInit {
+  record!: any;
+  i: any;
+
+  constructor(private modal: NzModalRef, private http: _HttpClient) {}
+
+  ngOnInit(): void {
+    this.http.get(RoutesApi.users + this.record.login).subscribe(res => (this.i = res));
+  }
+
+  close(): void {
+    this.modal.destroy();
+  }
+}

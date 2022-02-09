@@ -1,0 +1,50 @@
+import { Injectable } from '@angular/core';
+import { Menu } from '@delon/theme';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MenuDataService {
+  private allMenus: Menu[] = [
+    {
+      text: '菜单',
+      i18n: 'global.menu.main',
+      group: true,
+      children: [
+        {
+          text: '仪表盘',
+          i18n: 'global.menu.dashboard',
+          link: '/dashboard',
+          icon: { type: 'icon', value: 'appstore' }
+        },
+        {
+          text: '系统管理',
+          i18n: 'global.menu.system.main',
+          icon: { type: 'icon', value: 'menu-unfold' },
+          link: '',
+          children: [
+            {
+              text: '用户管理',
+              i18n: 'global.menu.system.userManagement',
+              icon: { type: 'icon', value: 'menu' },
+              link: '/system/user'
+            }
+          ]
+        },
+        {
+          text: 'Entities',
+          i18n: 'global.menu.entities.main',
+          icon: { type: 'icon', value: 'menu-unfold' },
+          link: '',
+          children: []
+        }
+      ]
+    }
+  ];
+
+  constructor() {}
+
+  getAllMenus(): Menu[] {
+    return this.allMenus;
+  }
+}

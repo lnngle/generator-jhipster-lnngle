@@ -1,0 +1,20 @@
+import { Directive, Input } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
+
+@Directive({
+  selector: '[appEquarValidator]',
+  providers: [{ provide: NG_VALIDATORS, useExisting: EquarValidatorDirective, multi: true }]
+})
+export class EquarValidatorDirective implements Validator {
+  @Input('appEquarValidator') targetName = '';
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (!control || !control.parent!) {
+      return null;
+    }
+    if (control.value !== control.parent!.get(this.targetName)!.value) {
+      return { equar: true };
+    }
+    return null;
+  }
+}

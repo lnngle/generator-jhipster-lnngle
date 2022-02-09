@@ -1,0 +1,58 @@
+import { MockRequest, MockStatusError } from '@delon/mock';
+
+const currentUser = { username: 'admin' };
+
+export const ACCOUNT = {
+  '/api/authorities': (req: MockRequest) => {
+    return ['ROLE_ADMIN', 'ROLE_USER'];
+  },
+  '/api/account': (req: MockRequest) => {
+    if (currentUser.username === 'admin') {
+      return {
+        id: 1,
+        login: 'admin',
+        firstName: 'Administrator',
+        lastName: 'Administrator1',
+        email: 'admin@localhost',
+        imageUrl: '',
+        activated: true,
+        langKey: 'zh-cn',
+        createdBy: 'system',
+        createdDate: null,
+        lastModifiedBy: 'admin',
+        lastModifiedDate: '2022-01-17T11:12:59.813399Z',
+        authorities: ['ROLE_USER', 'ROLE_ADMIN']
+      };
+    } else if (currentUser.username === 'user') {
+      return {
+        id: 2,
+        login: 'user',
+        firstName: 'User',
+        lastName: 'User',
+        email: 'user@localhost',
+        imageUrl: '',
+        activated: true,
+        langKey: 'zh-cn',
+        createdBy: 'system',
+        createdDate: null,
+        lastModifiedBy: 'system',
+        lastModifiedDate: null,
+        authorities: ['ROLE_USER']
+      };
+    } else {
+      return {};
+    }
+  },
+  'POST /api/authenticate': (req: MockRequest) => {
+    const data = req.body;
+    if ((data.username === 'admin' && data.password === 'admin') || (data.username === 'user' && data.password === 'user')) {
+      currentUser.username = data.username;
+      return {
+        id_token:
+          'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY0NTA2OTM2MH0.mm6rUBOCcBKw93Jr1sQMfaYkn4t33HCnzkgWtPb6Wr1c7O31RR-uChJ6aqAvaXm5VQFXV6v3QZU11iE40T_SPw'
+      };
+    } else {
+      throw new MockStatusError(401);
+    }
+  }
+};

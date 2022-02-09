@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const CommonGenerator = require('generator-jhipster/generators/common');
+const writeFiles = require('./files').writeFiles;
+const prettierConfigFiles = require('./files').prettierConfigFiles;
 
 module.exports = class extends CommonGenerator {
     constructor(args, opts) {
@@ -87,8 +89,13 @@ module.exports = class extends CommonGenerator {
     }
 
     get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        return {
+            writePrettierConfig() {
+                // Prettier configuration needs to be the first written files - all subgenerators considered - for prettier transform to work
+                return this.writeFilesToDisk(prettierConfigFiles);
+            },
+            ...writeFiles(),
+        };
     }
 
     get postWriting() {

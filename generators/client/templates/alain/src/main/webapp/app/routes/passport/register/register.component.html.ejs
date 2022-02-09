@@ -1,0 +1,79 @@
+<h3>{{ 'register.title' | i18n }}</h3>
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
+  <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="loginErrorTip">
+      <nz-input-group nzSize="large" nzAddonBeforeIcon="user">
+        <input nz-input formControlName="login" placeholder="{{ 'register.form.login.placeholder' | i18n }}" />
+      </nz-input-group>
+      <ng-template #loginErrorTip let-i>
+        <ng-container *ngIf="i.errors?.required">{{ 'register.messages.validate.login.required' | i18n }}</ng-container>
+        <ng-container *ngIf="i.errors?.minlength">{{ 'register.messages.validate.login.minlength' | i18n }}</ng-container>
+        <ng-container *ngIf="i.errors?.maxlength">{{ 'register.messages.validate.login.maxlength' | i18n }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="mailErrorTip">
+      <nz-input-group nzSize="large" nzAddonBeforeIcon="user">
+        <input nz-input formControlName="mail" placeholder="{{ 'register.form.email.placeholder' | i18n }}" />
+      </nz-input-group>
+      <ng-template #mailErrorTip let-i>
+        <ng-container *ngIf="i.errors?.required">{{ 'register.messages.validate.email.required' | i18n }}</ng-container>
+        <ng-container *ngIf="i.errors?.email">{{ 'register.messages.validate.email.wrong-format' | i18n }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="'register.messages.validate.password.required' | i18n">
+      <nz-input-group
+        nzSize="large"
+        nzAddonBeforeIcon="lock"
+        nz-popover
+        nzPopoverPlacement="right"
+        nzPopoverTrigger="focus"
+        [(nzPopoverVisible)]="visible"
+        nzPopoverOverlayClassName="register-password-cdk"
+        [nzPopoverOverlayStyle]="{ 'width.px': 240 }"
+        [nzPopoverContent]="pwdCdkTpl"
+      >
+        <input nz-input type="password" formControlName="password" placeholder="{{ 'register.form.password.placeholder' | i18n }}" />
+      </nz-input-group>
+      <ng-template #pwdCdkTpl>
+        <div style="padding: 4px 0">
+          <ng-container [ngSwitch]="status">
+            <div *ngSwitchCase="'ok'" class="success">{{ 'register.messages.validate.password.strength.strong' | i18n }}</div>
+            <div *ngSwitchCase="'pass'" class="warning">{{ 'register.messages.validate.password.strength.medium' | i18n }}</div>
+            <div *ngSwitchDefault class="error">{{ 'register.messages.validate.password.strength.short' | i18n }}</div>
+          </ng-container>
+          <div class="progress-{{ status }}">
+            <nz-progress
+              [nzPercent]="progress"
+              [nzStatus]="passwordProgressMap[status]"
+              [nzStrokeWidth]="6"
+              [nzShowInfo]="false"
+            ></nz-progress>
+          </div>
+          <p class="mt-sm">{{ 'register.messages.validate.password.strength.msg' | i18n }}</p>
+        </div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="confirmErrorTip">
+      <nz-input-group nzSize="large" nzAddonBeforeIcon="lock">
+        <input nz-input type="password" formControlName="confirm" placeholder="{{ 'register.form.passwordConfirm.placeholder' | i18n }}" />
+      </nz-input-group>
+      <ng-template #confirmErrorTip let-i>
+        <ng-container *ngIf="i.errors?.required">{{ 'register.messages.validate.passwordConfirm.required' | i18n }}</ng-container>
+        <ng-container *ngIf="i.errors?.matchControl">{{ 'register.messages.validate.password.twice' | i18n }}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading" class="submit">
+      {{ 'register.form.regist' | i18n }}
+    </button>
+    <a class="login" routerLink="/passport/login">{{ 'register.form.sign-in' | i18n }}</a>
+  </nz-form-item>
+</form>

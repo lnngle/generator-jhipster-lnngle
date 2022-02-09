@@ -1,0 +1,31 @@
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { UserRegisterResultComponent } from './register-result.component';
+
+describe('UserRegisterResultComponent', () => {
+  let component: UserRegisterResultComponent;
+  let fixture: ComponentFixture<UserRegisterResultComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [SharedModule, RouterTestingModule],
+        declarations: [UserRegisterResultComponent],
+        providers: [NzMessageService]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UserRegisterResultComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

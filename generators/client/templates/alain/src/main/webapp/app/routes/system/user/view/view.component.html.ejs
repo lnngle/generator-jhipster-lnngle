@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <div class="modal-title">{{ 'global.action.view' | i18n }}</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<div sv-container *ngIf="i">
+  <sv label="{{ 'global.field.id' | i18n }}">{{ i.id }}</sv>
+  <sv label="{{ 'user.form.login' | i18n }}">{{ i.login }}</sv>
+  <sv label="{{ 'user.form.firstName' | i18n }}">{{ i.firstName }}</sv>
+  <sv label="{{ 'user.form.lastName' | i18n }}">{{ i.lastName }}</sv>
+  <sv label="{{ 'user.form.email' | i18n }}">{{ i.email }}</sv>
+  <sv label="{{ 'user.form.activated' | i18n }}">{{ i.activated }}</sv>
+  <sv label="{{ 'user.form.createdBy' | i18n }}">{{ i.createdBy }}</sv>
+  <sv label="{{ 'user.form.createdDate' | i18n }}">{{ i.createdDate }}</sv>
+  <sv label="{{ 'user.form.lastModifiedBy' | i18n }}">{{ i.lastModifiedBy }}</sv>
+  <sv label="{{ 'user.form.lastModifiedDate' | i18n }}">{{ i.lastModifiedDate }}</sv>
+  <sv label="{{ 'user.form.authorities' | i18n }}">{{ i.authorities }}</sv>
+</div>
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">{{ 'global.action.close' | i18n }}</button>
+</div>

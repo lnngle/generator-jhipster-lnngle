@@ -1,0 +1,32 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ExceptionModule } from '@delon/abc/exception';
+import { _HttpClient } from '@delon/theme';
+
+import { ExceptionComponent } from './exception.component';
+
+describe('ExceptionComponent', () => {
+  let component: ExceptionComponent;
+  let fixture: ComponentFixture<ExceptionComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ExceptionModule, RouterTestingModule],
+        declarations: [ExceptionComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ExceptionComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

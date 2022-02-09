@@ -1,10 +1,7 @@
 const mkdirp = require('mkdirp');
 const constants = require('generator-jhipster/generators/generator-constants');
-const utils = require('../utils');
 
 const MAIN_SRC_DIR = constants.CLIENT_MAIN_SRC_DIR;
-const TEST_SRC_DIR = constants.CLIENT_TEST_SRC_DIR;
-const ALAIN_DIR = constants.ANGULAR_DIR;
 const CLIENT_ALAIN_TEMPLATES_DIR = 'alain';
 
 module.exports = {
@@ -15,11 +12,19 @@ const alainFiles = {
     common: [
         {
             templates: [
-                'package.json'
-            ]
-        }
-    ]
-}
+                'package.json',
+                'angular.json',
+                'jest.config.js',
+                'ng-alain.json',
+                'proxy.conf.js',
+                'tsconfig.app.json',
+                'tsconfig.json',
+                'tsconfig.spec.json',
+                'webpack.custom.js',
+            ],
+        },
+    ],
+};
 
 function writeFiles() {
     mkdirp(MAIN_SRC_DIR);

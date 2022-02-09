@@ -1,0 +1,11 @@
+<nz-spin [nzSpinning]="loading">
+  <div class="left">
+    <sf #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
+      <div class="modal-footer">
+        <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid">{{
+          'global.action.update' | i18n
+        }}</button>
+      </div>
+    </sf>
+  </div>
+</nz-spin>

@@ -1,0 +1,152 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { of } from 'rxjs';
+
+import { SystemUserViewComponent } from './view.component';
+
+jest.mock('ng-zorro-antd/modal');
+
+describe('SystemUserViewComponent', () => {
+  const user = {
+    id: 1,
+    login: 'admin',
+    password_hash: '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC',
+    firstName: 'Administrator',
+    lastName: 'Administrator',
+    email: 'admin@localhost',
+    activated: true,
+    langKey: 'zh-cn',
+    createdBy: 'system',
+    createdDate: '2022-01-17 11:11:11',
+    lastModifiedBy: 'system',
+    lastModifiedDate: '2022-01-17 11:11:11',
+    authorities: ['ROLE_USER', 'ROLE_ADMIN']
+  };
+  let component: SystemUserViewComponent;
+  let fixture: ComponentFixture<SystemUserViewComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule],
+        declarations: [SystemUserViewComponent],
+        providers: [NzModalRef, _HttpClient]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SystemUserViewComponent);
+    component = fixture.componentInstance;
+    component.record = user;
+    jest.spyOn(_HttpClient.prototype, 'get').mockImplementation((url: string | string[]) => of(user));
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('Should call load data on init', () => {
+    component.ngOnInit();
+    expect(component.i).toEqual(expect.objectContaining(user));
+  });
+
+  it('Should display detail data', () => {
+    const svList: DebugElement[] = fixture.debugElement.queryAll(By.css('sv'));
+    expect(svList).not.toBeNull();
+
+    //ID
+    const id: DebugElement[] = svList[0].queryAll(By.css('span'));
+    expect(id).not.toBeNull();
+    const idLabel = id[0].nativeElement as HTMLElement;
+    const idValue = id[1].nativeElement as HTMLElement;
+    expect(idLabel.textContent).toEqual('global.field.id');
+    expect(idValue.textContent).toEqual('1');
+
+    //admin
+    const login: DebugElement[] = svList[1].queryAll(By.css('span'));
+    expect(login).not.toBeNull();
+    const loginLabel = login[0].nativeElement as HTMLElement;
+    const loginValue = login[1].nativeElement as HTMLElement;
+    expect(loginLabel.textContent).toEqual('user.form.login');
+    expect(loginValue.textContent).toEqual('admin');
+
+    //firstName
+    const firstName: DebugElement[] = svList[2].queryAll(By.css('span'));
+    expect(firstName).not.toBeNull();
+    const firstNameLabel = firstName[0].nativeElement as HTMLElement;
+    const firstNameValue = firstName[1].nativeElement as HTMLElement;
+    expect(firstNameLabel.textContent).toEqual('user.form.firstName');
+    expect(firstNameValue.textContent).toEqual('Administrator');
+
+    //lastName
+    const lastName: DebugElement[] = svList[3].queryAll(By.css('span'));
+    expect(lastName).not.toBeNull();
+    const lastNameLabel = lastName[0].nativeElement as HTMLElement;
+    const lastNameValue = lastName[1].nativeElement as HTMLElement;
+    expect(lastNameLabel.textContent).toEqual('user.form.lastName');
+    expect(lastNameValue.textContent).toEqual('Administrator');
+
+    //email
+    const email: DebugElement[] = svList[4].queryAll(By.css('span'));
+    expect(email).not.toBeNull();
+    const emailLabel = email[0].nativeElement as HTMLElement;
+    const emailValue = email[1].nativeElement as HTMLElement;
+    expect(emailLabel.textContent).toEqual('user.form.email');
+    expect(emailValue.textContent).toEqual('admin@localhost');
+
+    //activated
+    const activated: DebugElement[] = svList[5].queryAll(By.css('span'));
+    expect(activated).not.toBeNull();
+    const activatedLabel = activated[0].nativeElement as HTMLElement;
+    const activatedValue = activated[1].nativeElement as HTMLElement;
+    expect(activatedLabel.textContent).toEqual('user.form.activated');
+    expect(activatedValue.textContent).toEqual('true');
+
+    //createdBy
+    const createdBy: DebugElement[] = svList[6].queryAll(By.css('span'));
+    expect(createdBy).not.toBeNull();
+    const createdByLabel = createdBy[0].nativeElement as HTMLElement;
+    const createdByValue = createdBy[1].nativeElement as HTMLElement;
+    expect(createdByLabel.textContent).toEqual('user.form.createdBy');
+    expect(createdByValue.textContent).toEqual('system');
+
+    //createdDate
+    const createdDate: DebugElement[] = svList[7].queryAll(By.css('span'));
+    expect(createdDate).not.toBeNull();
+    const createdDateLabel = createdDate[0].nativeElement as HTMLElement;
+    const createdDateValue = createdDate[1].nativeElement as HTMLElement;
+    expect(createdDateLabel.textContent).toEqual('user.form.createdDate');
+    expect(createdDateValue.textContent).toEqual('2022-01-17 11:11:11');
+
+    //lastModifiedBy
+    const lastModifiedBy: DebugElement[] = svList[8].queryAll(By.css('span'));
+    expect(lastModifiedBy).not.toBeNull();
+    const lastModifiedByLabel = lastModifiedBy[0].nativeElement as HTMLElement;
+    const lastModifiedByValue = lastModifiedBy[1].nativeElement as HTMLElement;
+    expect(lastModifiedByLabel.textContent).toEqual('user.form.lastModifiedBy');
+    expect(lastModifiedByValue.textContent).toEqual('system');
+
+    //lastModifiedDate
+    const lastModifiedDate: DebugElement[] = svList[9].queryAll(By.css('span'));
+    expect(lastModifiedDate).not.toBeNull();
+    const lastModifiedDateLabel = lastModifiedDate[0].nativeElement as HTMLElement;
+    const lastModifiedDateValue = lastModifiedDate[1].nativeElement as HTMLElement;
+    expect(lastModifiedDateLabel.textContent).toEqual('user.form.lastModifiedDate');
+    expect(lastModifiedDateValue.textContent).toEqual('2022-01-17 11:11:11');
+
+    //authorities
+    const authorities: DebugElement[] = svList[10].queryAll(By.css('span'));
+    expect(authorities).not.toBeNull();
+    const authoritiesLabel = authorities[0].nativeElement as HTMLElement;
+    const authoritiesValue = authorities[1].nativeElement as HTMLElement;
+    expect(authoritiesLabel.textContent).toEqual('user.form.authorities');
+    expect(authoritiesValue.textContent).toEqual('ROLE_USER,ROLE_ADMIN');
+  });
+});

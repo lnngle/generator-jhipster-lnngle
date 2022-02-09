@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "chalk": "2.4.1",
-    "generator-jhipster": "7.6.0"
+    "generator-jhipster": "7.6.0",
+    "mkdirp": "^1.0.4"
   },
   "devDependencies": {
     "chai": "4.3.0",

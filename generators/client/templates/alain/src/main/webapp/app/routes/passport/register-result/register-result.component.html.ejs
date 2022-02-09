@@ -1,0 +1,10 @@
+<result type="success" [title]="title" description="">
+  <ng-template #title>
+    <div class="title" style="font-size: 20px">
+      {{ 'register.messages.success' | i18n: params }}
+    </div>
+  </ng-template>
+  <button routerLink="/" nz-button nzSize="large">
+    {{ 'register.form.back-home' | i18n }}
+  </button>
+</result>
