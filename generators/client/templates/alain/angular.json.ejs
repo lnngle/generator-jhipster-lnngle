@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "lnngle-alain": {
+    "<%= dasherizedBaseName %>": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -122,10 +122,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "lnngle-alain:build:production"
+              "browserTarget": "<%= dasherizedBaseName %>:build:production"
             },
             "development": {
-              "browserTarget": "lnngle-alain:build:development"
+              "browserTarget": "<%= dasherizedBaseName %>:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -136,7 +136,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lnngle-alain:build"
+            "browserTarget": "<%= dasherizedBaseName %>:build"
           }
         },
         "test": {
@@ -166,5 +166,5 @@
       }
     }
   },
-  "defaultProject": "lnngle-alain"
+  "defaultProject": "<%= dasherizedBaseName %>"
 }

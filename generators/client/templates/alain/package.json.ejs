@@ -1,6 +1,9 @@
 {
-  "name": "lnngle-alain",
+  "name": "<%= dasherizedBaseName %>",
   "version": "0.0.0",
+  "description": "Description for <%= baseName  %>",
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "ng": "ng",
     "start": "ng s -o",
@@ -19,8 +22,9 @@
     "lint": "npm run lint:ts && npm run lint:style",
     "lint:ts": "ng lint --fix",
     "lint:style": "stylelint \"src/main/webapp/**/*.less\" --syntax less --fix"
+    "cleanup": "rimraf <%= DIST_DIR %>",
+    "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}",
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~13.1.1",
     "@angular/common": "~13.1.1",
@@ -87,6 +91,7 @@
     "merge-jsons-webpack-plugin": "^2.0.1",
     "ng-alain-plugin-theme": "^13.0.1",
     "prettier": "^2.5.1",
+    "rimraf": "3.0.2",
     "source-map-explorer": "^2.5.2",
     "stylelint": "^14.2.0",
     "stylelint-config-prettier": "^9.0.3",
