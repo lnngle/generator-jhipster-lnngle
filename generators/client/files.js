@@ -31,6 +31,11 @@ const alainFiles = {
             templates: ['_mock/_account.ts', '_mock/_user.ts', '_mock/index.ts', '_mock/README.md'],
         },
     ],
+    vscode: [
+        {
+            templates: ['.vscode/extensions.json', '.vscode/launch.json', '.vscode/settings.json', '.vscode/tasks.json'],
+        },
+    ],
     webCommon: [
         {
             path: MAIN_SRC_DIR,
