@@ -21,9 +21,9 @@
     "prepare": "husky install",
     "lint": "npm run lint:ts && npm run lint:style",
     "lint:ts": "ng lint --fix",
-    "lint:style": "stylelint \"src/main/webapp/**/*.less\" --syntax less --fix"
+    "lint:style": "stylelint \"src/main/webapp/**/*.less\" --syntax less --fix",
     "cleanup": "rimraf <%= DIST_DIR %>",
-    "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}",
+    "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}"
   },
   "dependencies": {
     "@angular/animations": "~13.1.1",
