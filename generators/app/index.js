@@ -1,23 +1,14 @@
 /* eslint-disable consistent-return */
-const chalk = require('chalk');
-const LanguagesGenerator = require('generator-jhipster/generators/languages');
+const AppGenerator = require('generator-jhipster/generators/app');
 
-module.exports = class extends LanguagesGenerator {
+module.exports = class extends AppGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
-
-        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
-
-        if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints lnngle')}`);
-        }
-
-        this.configOptions = jhContext.configOptions || {};
     }
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `LanguagesGenerator`
+         * Any method beginning with _ can be reused from the superclass `AppGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -61,12 +52,7 @@ module.exports = class extends LanguagesGenerator {
         const defaultPhaseFromJHipster = super._prompting();
         return {
             ...defaultPhaseFromJHipster,
-            askI18n: undefined,
-            askForLanguages: undefined,
-            overrideConfigOptions() {
-                this.enableTranslation = this.jhipsterConfig.enableTranslation = false;
-                this.languages = this.jhipsterConfig.languages = ['zh-cn'];
-            },
+            askForApplicationType: this.jhipsterConfig.skipServer ? undefined : this.prompting.askForApplicationType,
         };
     }
 
@@ -77,7 +63,12 @@ module.exports = class extends LanguagesGenerator {
 
     get composing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._composing();
+        const defaultPhaseFromJHipster = super._composing();
+        return {
+            ...defaultPhaseFromJHipster,
+            askForTestOpts: this.jhipsterConfig.skipServer ? undefined : this.prompting.askForTestOpts,
+            askForMoreModules: this.jhipsterConfig.skipServer ? undefined : this.prompting.askForMoreModules,
+        };
     }
 
     get loading() {
@@ -102,7 +93,7 @@ module.exports = class extends LanguagesGenerator {
 
     get postWriting() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return {};
+        return super._postWriting();
     }
 
     get install() {
