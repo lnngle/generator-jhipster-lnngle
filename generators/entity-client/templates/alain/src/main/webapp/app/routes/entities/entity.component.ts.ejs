@@ -1,0 +1,106 @@
+import { Component, Inject, ViewChild } from '@angular/core';
+import { I18NService } from '@core';
+import { STColumn, STComponent } from '@delon/abc/st';
+import { SFSchema } from '@delon/form';
+import { ALAIN_I18N_TOKEN, ModalHelper, _HttpClient } from '@delon/theme';
+import { RoutesApi, TableConst } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { Entities<%= entityAngularName %>EditComponent } from './edit/edit.component';
+import { Entities<%= entityAngularName %>ViewComponent } from './view/view.component';
+
+@Component({
+  selector: 'app-entities-<%= entityFileName %>',
+  templateUrl: './<%= entityFileName %>.component.html'
+})
+export class Entities<%= entityAngularName %>Component {
+  url = RoutesApi.<%= entityFileName %>;
+  paging = TableConst.paging;
+  resultConvert = TableConst.resultConvert;
+  searchSchema: SFSchema = {
+    properties: {
+      login: {
+        type: 'string',
+        title: this.i18n.fanyi('demo.form.login')
+      },
+      createdDate: {
+        type: 'string',
+        title: this.i18n.fanyi('demo.form.createdDate'),
+        ui: {
+          widget: 'date',
+          end: 'createdDateEnd',
+          format: 'yyyy-MM-dd 00:00:00'
+        }
+      },
+      createdDateEnd: {
+        type: 'string',
+        ui: {
+          widget: 'date',
+          end: 'createdDateEnd',
+          format: 'yyyy-MM-dd 23:59:59'
+        }
+      },
+      activated: {
+        type: 'boolean',
+        title: this.i18n.fanyi('demo.form.activated')
+      }
+    }
+  };
+  @ViewChild('st') private readonly st!: STComponent;
+  columns: STColumn[] = [
+    { title: this.i18n.fanyi('global.field.id'), index: 'id' },
+    { title: this.i18n.fanyi('demo.form.login'), index: 'login' },
+    { title: this.i18n.fanyi('demo.form.email'), index: 'email' },
+    { title: this.i18n.fanyi('demo.form.createdDate'), index: 'createdDate' },
+    { title: this.i18n.fanyi('demo.form.createdBy'), index: 'createdBy' },
+    { title: this.i18n.fanyi('demo.form.lastModifiedDate'), index: 'lastModifiedDate' },
+    {
+      title: '',
+      buttons: [
+        {
+          text: this.i18n.fanyi('global.action.view'),
+          type: 'modal',
+          modal: { component: Entities<%= entityAngularName %>ViewComponent }
+        },
+        {
+          text: this.i18n.fanyi('global.action.edit'),
+          type: 'modal',
+          modal: { component: Entities<%= entityAngularName %>EditComponent },
+          click: _record => this.st.reload()
+        },
+        {
+          text: this.i18n.fanyi('global.action.delete'),
+          type: 'del',
+          pop: {
+            title: this.i18n.fanyi('global.messages.confirm.delete'),
+            placement: 'top',
+            okType: 'primary'
+          },
+          click: _record => this.delete(_record)
+        }
+      ]
+    }
+  ];
+
+  constructor(
+    private msgSrv: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private http: _HttpClient,
+    private modal: ModalHelper
+  ) {}
+
+  search(value?: any) {
+    this.st.load(1, value);
+  }
+
+  add(): void {
+    this.modal.createStatic(Entities<%= entityAngularName %>EditComponent).subscribe(() => this.st.reload());
+  }
+
+  delete(record: any): void {
+    this.http.delete(RoutesApi.demo + record.id).subscribe(res => {
+      this.msgSrv.success(this.i18n.fanyi('global.messages.success.delete'));
+      this.st.reload();
+    });
+  }
+}

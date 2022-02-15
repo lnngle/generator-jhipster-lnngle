@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const EntityClientGenerator = require('generator-jhipster/generators/entity-client');
+const writeFiles = require('./files').writeFiles;
 
 module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
@@ -83,8 +84,11 @@ module.exports = class extends EntityClientGenerator {
     }
 
     get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        return {
+            writeAdditionalFile() {
+                writeFiles.call(this);
+            },
+        };
     }
 
     get postWriting() {

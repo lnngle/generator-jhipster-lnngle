@@ -187,7 +187,7 @@ export class DefaultInterceptor implements HttpInterceptor {
           }
           let total = ev.headers.get('X-Total-Count');
           if (total) {
-            return of(new HttpResponse(Object.assign(ev, { body: { body: ev.body, total: total } } as any)));
+            return of(new HttpResponse(Object.assign(ev, { body: { data: ev.body, total: total } } as any)));
           } else {
             return of(ev);
           }

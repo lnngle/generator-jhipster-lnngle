@@ -1,0 +1,36 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DelonFormModule } from '@delon/form';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+
+import { Entities<%= entityAngularName %>EditComponent } from './edit.component';
+
+jest.mock('ng-zorro-antd/modal');
+
+describe('Entities<%= entityAngularName %>EditComponent', () => {
+  let component: Entities<%= entityAngularName %>EditComponent;
+  let fixture: ComponentFixture<Entities<%= entityAngularName %>EditComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule, DelonFormModule.forRoot()],
+        declarations: [Entities<%= entityAngularName %>EditComponent],
+        providers: [NzMessageService, NzModalRef, _HttpClient]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(Entities<%= entityAngularName %>EditComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

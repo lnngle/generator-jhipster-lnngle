@@ -23,7 +23,10 @@
     "lint:ts": "ng lint --fix",
     "lint:style": "stylelint \"src/main/webapp/**/*.less\" --syntax less --fix",
     "cleanup": "rimraf <%= DIST_DIR %>",
-    "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}"
+    "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}",
+    "webapp:build": "<%= clientPackageManager %> run clean-www && <%= clientPackageManager %> run webapp:build:dev",
+    "webapp:build:dev": "ng build --configuration development",
+    "webapp:build:prod": "ng build --configuration production",
   },
   "dependencies": {
     "@angular/animations": "~13.1.1",
@@ -45,6 +48,7 @@
     "@delon/util": "^13.1.0",
     "ajv": "^8.8.2",
     "ajv-formats": "^2.1.1",
+    "faker": "^5.5.3",
     "ng-alain": "13.1.0",
     "ng-zorro-antd": "^13.0.0",
     "rxjs": "~7.4.0",
@@ -68,6 +72,7 @@
     "@babel/preset-env": "^7.16.11",
     "@briebug/jest-schematic": "4.0.0",
     "@delon/testing": "^13.1.0",
+    "@types/faker": "^5.5.9",
     "@types/jest": "27.4",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "~5.8.1",

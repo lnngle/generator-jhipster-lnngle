@@ -1,0 +1,13 @@
+import { NgModule, Type } from '@angular/core';
+import { SharedModule } from '@shared';
+
+import { EntitiesRoutingModule } from './entities-routing.module';
+
+const COMPONENTS: Array<Type<void>> = [
+  ];
+
+@NgModule({
+  imports: [SharedModule, EntitiesRoutingModule],
+  declarations: COMPONENTS
+})
+export class EntitiesModule {}

@@ -1,0 +1,9 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary">{{ 'global.action.create' | i18n }}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <sf #sf mode="search" [schema]="searchSchema" (formSubmit)="search($event)" (formReset)="search()"> </sf>
+  <st #st [data]="url" [columns]="columns" [page]="{ zeroIndexed: true }" [req]="{ reName: paging }" [res]="{ reName: resultConvert }"></st>
+</nz-card>

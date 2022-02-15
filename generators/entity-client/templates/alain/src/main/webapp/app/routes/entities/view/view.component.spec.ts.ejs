@@ -1,0 +1,37 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { _HttpClient } from '@delon/theme';
+import { SharedModule } from '@shared';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { of } from 'rxjs';
+
+import { Entities<%= entityAngularName %>ViewComponent } from './view.component';
+
+jest.mock('ng-zorro-antd/modal');
+
+describe('Entities<%= entityAngularName %>ViewComponent', () => {
+  let component: Entities<%= entityAngularName %>ViewComponent;
+  let fixture: ComponentFixture<Entities<%= entityAngularName %>ViewComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, SharedModule],
+        declarations: [Entities<%= entityAngularName %>ViewComponent],
+        providers: [NzModalRef, _HttpClient]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(Entities<%= entityAngularName %>ViewComponent);
+    component = fixture.componentInstance;
+    component.record = { id: 1 };
+    jest.spyOn(_HttpClient.prototype, 'get').mockImplementation((url: string | string[]) => of({}));
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

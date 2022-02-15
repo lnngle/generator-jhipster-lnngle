@@ -1,0 +1,63 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { I18NService } from '@core';
+import { SFSchema, SFUISchema } from '@delon/form';
+import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
+import { RoutesApi } from '@shared';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+
+@Component({
+  selector: 'app-entities-<%= entityFileName %>-edit',
+  templateUrl: './edit.component.html'
+})
+export class Entities<%= entityAngularName %>EditComponent implements OnInit {
+  record: any = {};
+  i: any;
+  schema: SFSchema = {
+    properties: {
+      login: { type: 'string', title: this.i18n.fanyi('demo.form.login') },
+      firstName: { type: 'string', title: this.i18n.fanyi('demo.form.firstName') },
+      lastName: { type: 'string', title: this.i18n.fanyi('demo.form.lastName') },
+      email: { type: 'string', title: this.i18n.fanyi('demo.form.email') },
+      activated: { type: 'boolean', title: this.i18n.fanyi('demo.form.activated'), default: true }
+    },
+    required: ['login']
+  };
+  ui: SFUISchema = {
+    '*': {},
+    $activated: {
+      widget: 'checkbox'
+    }
+  };
+
+  constructor(
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private modal: NzModalRef,
+    private msgSrv: NzMessageService,
+    public http: _HttpClient
+  ) {}
+
+  ngOnInit(): void {
+    if (this.record.id > 0) {
+      this.http.get(RoutesApi.<%= entityFileName %> + this.record.id).subscribe(res => (this.i = res));
+    }
+  }
+
+  save(value: any): void {
+    if (this.record.id > 0) {
+      this.http.put(RoutesApi.<%= entityFileName %>, value).subscribe(res => {
+        this.msgSrv.success(this.i18n.fanyi('global.messages.success.update'));
+        this.modal.close(true);
+      });
+    } else {
+      this.http.post(RoutesApi.<%= entityFileName %>, value).subscribe(res => {
+        this.msgSrv.success(this.i18n.fanyi('global.messages.success.save'));
+        this.modal.close(true);
+      });
+    }
+  }
+
+  close(): void {
+    this.modal.destroy();
+  }
+}

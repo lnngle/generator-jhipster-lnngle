@@ -33,8 +33,11 @@ const list: any[] = [
   }
 ];
 
-function getAll(req: MockRequest): any[] {
-  return list;
+function getAll(req: MockRequest): any {
+  const page = req.queryString.page;
+  const size = req.queryString.size;
+  const data = list.slice(page, page + size);
+  return { data: data, total: list.length };
 }
 
 function create(req: MockRequest) {
@@ -43,12 +46,12 @@ function create(req: MockRequest) {
 
 function update(req: MockRequest) {
   const value = req.body;
-  let update = list.find(item => item.login === value.login);
-  update = value;
+  const index = list.findIndex(item => item.id == value.id);
+  list[index] = value;
 }
 
 function reomve(req: MockRequest) {
-  let index = list.findIndex(item => item.login === req.params.login);
+  const index = list.findIndex(item => item.login === req.params.login);
   list.splice(index, 1);
 }
 

@@ -1,0 +1,18 @@
+{
+    "<%= entityTranslationKey %>": {
+      "title": "<%= entityClassPluralHumanized %> management",
+      "form": {
+        <% for (idx in fields) {
+            if (typeof fields[idx].javadoc !== 'undefined') ++helpBlocks; %>,
+            "<%= fields[idx].fieldName %>": "<%= fields[idx].fieldNameHumanized %>"<% } %><% for (idx in relationships) { %>,
+            "<%= relationships[idx].relationshipName %>": "<%= relationships[idx].relationshipNameHumanized %>"<% } if (helpBlocks > 0) { %>,
+            "help": {<% for (idx in fields) {
+                if (fields[idx].javadoc) {
+                    --helpBlocks; %>
+                "<%= fields[idx].fieldName %>": "<%= fields[idx].javadoc %>"<% if (helpBlocks > 0) { %>,<% }
+                }
+            } %>
+            }<% } %>
+      }
+    }
+  }

@@ -180,6 +180,12 @@ const alainFiles = {
             ],
         },
     ],
+    webAppEntities: [
+        {
+            path: APP_DIR,
+            templates: ['routes/entities/entities.module.ts', 'routes/entities/entities-routing.module.ts'],
+        },
+    ],
 };
 
 function writeFiles() {

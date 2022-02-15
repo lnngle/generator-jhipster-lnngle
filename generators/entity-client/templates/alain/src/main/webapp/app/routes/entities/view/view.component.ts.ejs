@@ -1,0 +1,23 @@
+import { Component, OnInit } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+import { RoutesApi } from '@shared';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+
+@Component({
+  selector: 'app-entities-<%= entityFileName %>-view',
+  templateUrl: './view.component.html'
+})
+export class Entities<%= entityAngularName %>ViewComponent implements OnInit {
+  record!: any;
+  i: any;
+
+  constructor(private modal: NzModalRef, private http: _HttpClient) {}
+
+  ngOnInit(): void {
+    this.http.get(RoutesApi.<%= entityFileName %> + this.record.id).subscribe(res => (this.i = res));
+  }
+
+  close(): void {
+    this.modal.destroy();
+  }
+}
