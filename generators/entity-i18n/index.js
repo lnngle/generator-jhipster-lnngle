@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const EntityI18nGenerator = require('generator-jhipster/generators/entity-i18n');
+const writeFiles = require('./files').writeFiles;
 
 module.exports = class extends EntityI18nGenerator {
     constructor(args, opts) {
@@ -87,8 +88,7 @@ module.exports = class extends EntityI18nGenerator {
     }
 
     get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        return { ...writeFiles() };
     }
 
     get postWriting() {

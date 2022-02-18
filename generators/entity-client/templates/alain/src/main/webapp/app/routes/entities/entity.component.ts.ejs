@@ -19,41 +19,27 @@ export class Entities<%= entityAngularName %>Component {
   resultConvert = TableConst.resultConvert;
   searchSchema: SFSchema = {
     properties: {
-      login: {
-        type: 'string',
-        title: this.i18n.fanyi('demo.form.login')
+<%_
+  for (field of fields.filter(field => !field.hidden)) {
+    const fieldName = field.fieldName;
+    const fieldType = field.fieldType;
+_%> 
+      <%= fieldName %>: {
+        type: '<%= fieldType %>',
+        title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>')
       },
-      createdDate: {
-        type: 'string',
-        title: this.i18n.fanyi('demo.form.createdDate'),
-        ui: {
-          widget: 'date',
-          end: 'createdDateEnd',
-          format: 'yyyy-MM-dd 00:00:00'
-        }
-      },
-      createdDateEnd: {
-        type: 'string',
-        ui: {
-          widget: 'date',
-          end: 'createdDateEnd',
-          format: 'yyyy-MM-dd 23:59:59'
-        }
-      },
-      activated: {
-        type: 'boolean',
-        title: this.i18n.fanyi('demo.form.activated')
-      }
+<%_ } _%>
     }
   };
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: this.i18n.fanyi('global.field.id'), index: 'id' },
-    { title: this.i18n.fanyi('demo.form.login'), index: 'login' },
-    { title: this.i18n.fanyi('demo.form.email'), index: 'email' },
-    { title: this.i18n.fanyi('demo.form.createdDate'), index: 'createdDate' },
-    { title: this.i18n.fanyi('demo.form.createdBy'), index: 'createdBy' },
-    { title: this.i18n.fanyi('demo.form.lastModifiedDate'), index: 'lastModifiedDate' },
+<%_
+  for (field of fields.filter(field => !field.hidden)) {
+    const fieldName = field.fieldName;
+    const fieldType = field.fieldType;
+_%> 
+    { title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>'), index: '<%= fieldName %>' },
+<%_ } _%>
     {
       title: '',
       buttons: [

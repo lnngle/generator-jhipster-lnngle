@@ -26,7 +26,7 @@
     "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}",
     "webapp:build": "<%= clientPackageManager %> run clean-www && <%= clientPackageManager %> run webapp:build:dev",
     "webapp:build:dev": "ng build --configuration development",
-    "webapp:build:prod": "ng build --configuration production",
+    "webapp:build:prod": "ng build --configuration production"
   },
   "dependencies": {
     "@angular/animations": "~13.1.1",

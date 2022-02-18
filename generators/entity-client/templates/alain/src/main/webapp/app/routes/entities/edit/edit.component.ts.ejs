@@ -15,19 +15,18 @@ export class Entities<%= entityAngularName %>EditComponent implements OnInit {
   i: any;
   schema: SFSchema = {
     properties: {
-      login: { type: 'string', title: this.i18n.fanyi('demo.form.login') },
-      firstName: { type: 'string', title: this.i18n.fanyi('demo.form.firstName') },
-      lastName: { type: 'string', title: this.i18n.fanyi('demo.form.lastName') },
-      email: { type: 'string', title: this.i18n.fanyi('demo.form.email') },
-      activated: { type: 'boolean', title: this.i18n.fanyi('demo.form.activated'), default: true }
+<%_
+  for (field of fields.filter(field => !field.hidden)) {
+    const fieldName = field.fieldName;
+    const fieldType = field.fieldType;
+_%> 
+      <%= fieldName %>: { type: '<%= fieldType %>', title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>') },
+<%_ } _%>
     },
-    required: ['login']
+    required: []
   };
   ui: SFUISchema = {
-    '*': {},
-    $activated: {
-      widget: 'checkbox'
-    }
+    '*': {}
   };
 
   constructor(

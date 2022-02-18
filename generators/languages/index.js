@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const LanguagesGenerator = require('generator-jhipster/generators/languages');
+const constants = require('generator-jhipster/generators/generator-constants');
+const { clientI18nFiles } = require('./files');
 
 module.exports = class extends LanguagesGenerator {
     constructor(args, opts) {
@@ -64,7 +66,7 @@ module.exports = class extends LanguagesGenerator {
             askI18n: undefined,
             askForLanguages: undefined,
             overrideConfigOptions() {
-                this.enableTranslation = this.jhipsterConfig.enableTranslation = false;
+                this.enableTranslation = this.jhipsterConfig.enableTranslation = true;
                 this.languages = this.jhipsterConfig.languages = ['zh-cn'];
             },
         };
@@ -96,8 +98,26 @@ module.exports = class extends LanguagesGenerator {
     }
 
     get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        return {
+            async writeClientTranslations() {
+                if (!super.skipClient) {
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const lang of super.languagesToApply) {
+                        super.lang = lang;
+                        // eslint-disable-next-line no-await-in-loop
+                        await super.writeFiles({ sections: clientI18nFiles });
+                    }
+                }
+            },
+            translateFile() {
+                this.languagesToApply.forEach(language => {
+                    if (!this.skipServer) {
+                        this.installI18nServerFilesByLanguage(this, constants.SERVER_MAIN_RES_DIR, language, constants.SERVER_TEST_RES_DIR);
+                    }
+                    super.statistics.sendSubGenEvent('languages/language', language);
+                });
+            },
+        };
     }
 
     get postWriting() {
