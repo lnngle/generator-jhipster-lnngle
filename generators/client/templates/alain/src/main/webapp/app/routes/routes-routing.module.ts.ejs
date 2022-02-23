@@ -42,7 +42,7 @@ const routes: Routes = [
         ]
       },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      { path: 'system', loadChildren: () => import('./system/system.module').then(m => m.SystemModule) }
+      { path: 'system', loadChildren: () => import('./system/system.module').then(m => m.SystemModule) },
       // 业务子模块
       { path: 'entities', loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule) }
     ]

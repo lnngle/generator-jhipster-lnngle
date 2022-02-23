@@ -18,7 +18,7 @@ function addApiToGlobalConstants(generator, entityInstance, entityApiUrl) {
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/shared/constants/global-constant.ts`,
             needle: '// jhipster-needle-add-api-to-constants',
-            splicable: [`static readonly ${entityInstance} = \`\${RoutesApi.api_prefix}/${entityApiUrl}\`;`],
+            splicable: [`static readonly ${entityInstance} = \`\${RoutesApi.api_prefix}/${entityApiUrl}/\`;`],
         },
         generator
     );
@@ -30,9 +30,9 @@ function addComponentToModule(generator, entityAngularName) {
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities.module.ts`,
             needle: '// jhipster-needle-add-component-to-module',
             splicable: [
-                `Entities${entityAngularName}Component,`,
+                `,Entities${entityAngularName}Component,`,
                 `Entities${entityAngularName}EditComponent,`,
-                `Entities${entityAngularName}ViewComponent,`,
+                `Entities${entityAngularName}ViewComponent`,
             ],
         },
         generator
@@ -45,9 +45,9 @@ function addComponentToModuleImport(generator, entityAngularName, entityFolderNa
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities.module.ts`,
             needle: '// jhipster-needle-add-component-to-module-import',
             splicable: [
-                `import { ${entityAngularName} } from './${entityFolderName}/${entityFileName}.component';`,
-                `import { ${entityAngularName} } from './${entityFolderName}/edit/edit.component';`,
-                `import { ${entityAngularName} } from './${entityFolderName}/view/view.component';`,
+                `import { Entities${entityAngularName}Component } from './${entityFolderName}/${entityFileName}.component';`,
+                `import { Entities${entityAngularName}EditComponent } from './${entityFolderName}/edit/edit.component';`,
+                `import { Entities${entityAngularName}ViewComponent } from './${entityFolderName}/view/view.component';`,
             ],
         },
         generator
@@ -59,7 +59,7 @@ function addComponentToRouting(generator, entityAngularName, entityFileName) {
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities-routing.module.ts`,
             needle: '// jhipster-needle-add-component-to-routing',
-            splicable: [`{ path: '${entityFileName}', component: Entities${entityAngularName}Component },`],
+            splicable: [`,{ path: '${entityFileName}', component: Entities${entityAngularName}Component },`],
         },
         generator
     );
@@ -70,7 +70,7 @@ function addComponentToRoutingImport(generator, entityAngularName, entityFolderN
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities-routing.module.ts`,
             needle: '// jhipster-needle-add-component-to-routing-import',
-            splicable: [`import { ${entityAngularName} } from './${entityFolderName}/${entityFileName}.component';`],
+            splicable: [`import { Entities${entityAngularName}Component } from './${entityFolderName}/${entityFileName}.component';`],
         },
         generator
     );
@@ -83,13 +83,12 @@ function addComponentToMenu(generator, entityFileName, entityTranslationKey) {
             needle: '// jhipster-needle-add-component-to-menu',
             splicable: [
                 generator.stripMargin(
-                    `|
-                    | {
+                    `| ,{
                     |   text: '${entityTranslationKey}',
                     |   i18n: '${entityTranslationKey}.title',
                     |   icon: { type: 'icon', value: 'menu' },
                     |   link: '/entities/${entityFileName}'
-                    | },`
+                    | }`
                 ),
             ],
         },

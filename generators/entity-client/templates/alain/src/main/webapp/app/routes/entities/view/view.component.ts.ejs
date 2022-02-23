@@ -14,7 +14,7 @@ export class Entities<%= entityAngularName %>ViewComponent implements OnInit {
   constructor(private modal: NzModalRef, private http: _HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get(RoutesApi.<%= entityFileName %> + this.record.id).subscribe(res => (this.i = res));
+    this.http.get(RoutesApi.<%= entityInstance %> + this.record.id).subscribe(res => (this.i = res));
   }
 
   close(): void {

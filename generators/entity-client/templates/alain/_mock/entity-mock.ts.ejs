@@ -12,7 +12,7 @@ for (field of fields.filter(field => !field.hidden)) {
     const fieldType = field.fieldType;
     const alainType = getFieldTypeOfAlain(fieldType);
 _%> 
-    <%= fieldName %>: faker.datatype.getFieldTypeOfAlain(fieldType)(),
+    <%= fieldName %>: faker.datatype.<%= alainType %>(),
 <%_ } _%>
   });
 }
@@ -43,10 +43,10 @@ function get(req: MockRequest): any {
   return list.find(item => item.id == req.params.id);
 }
 
-export const DEMO = {
-  '/api/entities/demo/': (req: MockRequest) => getAll(req),
-  'POST /api/entities/demo/': (req: MockRequest) => create(req),
-  'PUT /api/entities/demo/': (req: MockRequest) => update(req),
-  '/api/entities/demo/:id': (req: MockRequest) => get(req),
-  'DELETE /api/entities/demo/:id': (req: MockRequest) => reomve(req)
+export const <%=entityAngularName.toUpperCase()%> = {
+  '/api/<%=entityApiUrl%>/': (req: MockRequest) => getAll(req),
+  'POST /api/<%=entityApiUrl%>/': (req: MockRequest) => create(req),
+  'PUT /api/<%=entityApiUrl%>/': (req: MockRequest) => update(req),
+  '/api/<%=entityApiUrl%>/:id': (req: MockRequest) => get(req),
+  'DELETE /api/<%=entityApiUrl%>/:id': (req: MockRequest) => reomve(req)
 };

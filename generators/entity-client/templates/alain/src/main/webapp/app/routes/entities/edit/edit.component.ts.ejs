@@ -39,18 +39,18 @@ _%>
 
   ngOnInit(): void {
     if (this.record.id > 0) {
-      this.http.get(RoutesApi.<%= entityFileName %> + this.record.id).subscribe(res => (this.i = res));
+      this.http.get(RoutesApi.<%= entityInstance %> + this.record.id).subscribe(res => (this.i = res));
     }
   }
 
   save(value: any): void {
     if (this.record.id > 0) {
-      this.http.put(RoutesApi.<%= entityFileName %>, value).subscribe(res => {
+      this.http.put(RoutesApi.<%= entityInstance %>, value).subscribe(res => {
         this.msgSrv.success(this.i18n.fanyi('global.messages.success.update'));
         this.modal.close(true);
       });
     } else {
-      this.http.post(RoutesApi.<%= entityFileName %>, value).subscribe(res => {
+      this.http.post(RoutesApi.<%= entityInstance %>, value).subscribe(res => {
         this.msgSrv.success(this.i18n.fanyi('global.messages.success.save'));
         this.modal.close(true);
       });

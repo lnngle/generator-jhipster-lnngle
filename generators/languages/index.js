@@ -98,26 +98,7 @@ module.exports = class extends LanguagesGenerator {
     }
 
     get writing() {
-        return {
-            async writeClientTranslations() {
-                if (!super.skipClient) {
-                    // eslint-disable-next-line no-restricted-syntax
-                    for (const lang of super.languagesToApply) {
-                        super.lang = lang;
-                        // eslint-disable-next-line no-await-in-loop
-                        await super.writeFiles({ sections: clientI18nFiles });
-                    }
-                }
-            },
-            translateFile() {
-                this.languagesToApply.forEach(language => {
-                    if (!this.skipServer) {
-                        this.installI18nServerFilesByLanguage(this, constants.SERVER_MAIN_RES_DIR, language, constants.SERVER_TEST_RES_DIR);
-                    }
-                    super.statistics.sendSubGenEvent('languages/language', language);
-                });
-            },
-        };
+        return {};
     }
 
     get postWriting() {

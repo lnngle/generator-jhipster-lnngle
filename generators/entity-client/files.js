@@ -64,11 +64,10 @@ const alainFiles = {
     ],
     mock: [
         {
-            path: CLIENT_ALAIN_TEMPLATES_DIR,
             templates: [
                 {
                     file: '_mock/entity-mock.ts',
-                    renameTo: generator => `_mock/${generator.entityInstance}.ts`,
+                    renameTo: generator => `_mock/_${generator.entityInstance}.ts`,
                 },
             ],
         },
