@@ -10,6 +10,7 @@ module.exports = {
     addComponentToRouting,
     addComponentToRoutingImport,
     addComponentToMenu,
+    addEntityMockData,
 };
 
 function addApiToGlobalConstants(generator, entityInstance, entityApiUrl) {
@@ -91,6 +92,17 @@ function addComponentToMenu(generator, entityFileName, entityTranslationKey) {
                     | },`
                 ),
             ],
+        },
+        generator
+    );
+}
+
+function addEntityMockData(generator, entityInstance) {
+    jhipsterUtils.rewriteFile(
+        {
+            file: '_mock/index.ts',
+            needle: '// jhipster-needle-add-entity-mock-data',
+            splicable: [`export * from './_${entityInstance}';`],
         },
         generator
     );

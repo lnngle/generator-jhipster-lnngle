@@ -62,6 +62,17 @@ const alainFiles = {
             ],
         },
     ],
+    mock: [
+        {
+            path: CLIENT_ALAIN_TEMPLATES_DIR,
+            templates: [
+                {
+                    file: '_mock/entity-mock.ts',
+                    renameTo: generator => `_mock/${generator.entityInstance}.ts`,
+                },
+            ],
+        },
+    ],
 };
 
 function writeFiles() {
@@ -75,6 +86,7 @@ function writeFiles() {
     utils.addComponentToRouting(this, this.entityAngularName, this.entityFileName);
     utils.addComponentToRoutingImport(this, this.entityAngularName, this.entityFolderName, this.entityFileName);
     utils.addComponentToMenu(this, this.entityFileName, this.entityTranslationKey);
+    utils.addEntityMockData(this, this.entityInstance);
 }
 
 module.exports = {

@@ -1,0 +1,52 @@
+import { MockRequest } from '@delon/mock';
+import * as faker from 'faker';
+
+const count = 100;
+const list: any[] = [];
+
+for (let i = 0; i < count; i++) {
+  list.push({
+<%_
+for (field of fields.filter(field => !field.hidden)) {
+    const fieldName = field.fieldName;
+    const fieldType = field.fieldType;
+    const alainType = getFieldTypeOfAlain(fieldType);
+_%> 
+    <%= fieldName %>: faker.datatype.getFieldTypeOfAlain(fieldType)(),
+<%_ } _%>
+  });
+}
+
+function getAll(req: MockRequest): any {
+  const page = req.queryString.page;
+  const size = req.queryString.size;
+  const data = list.slice(page, page + size);
+  return { data: data, total: list.length };
+}
+
+function create(req: MockRequest) {
+  list.push(req.body);
+}
+
+function update(req: MockRequest) {
+  const value = req.body;
+  const index = list.findIndex(item => item.id == value.id);
+  list[index] = value;
+}
+
+function reomve(req: MockRequest) {
+  const index = list.findIndex(item => item.id == req.params.id);
+  list.splice(index, 1);
+}
+
+function get(req: MockRequest): any {
+  return list.find(item => item.id == req.params.id);
+}
+
+export const DEMO = {
+  '/api/entities/demo/': (req: MockRequest) => getAll(req),
+  'POST /api/entities/demo/': (req: MockRequest) => create(req),
+  'PUT /api/entities/demo/': (req: MockRequest) => update(req),
+  '/api/entities/demo/:id': (req: MockRequest) => get(req),
+  'DELETE /api/entities/demo/:id': (req: MockRequest) => reomve(req)
+};
