@@ -1,3 +1,5 @@
+const utils = require('../utils');
+
 const ALAIN_DIR = 'src/main/webapp/app/routes/';
 const ALAIN_EDIT_DIR = 'edit/';
 const ALAIN_VIEW_DIR = 'view/';
@@ -67,6 +69,12 @@ function writeFiles() {
 
     // write client side files for Vue.js
     this.writeFilesToDisk(alainFiles, this, false, `${CLIENT_ALAIN_TEMPLATES_DIR}`);
+    utils.addApiToGlobalConstants(this, this.entityInstance, this.entityApiUrl);
+    utils.addComponentToModule(this, this.entityAngularName);
+    utils.addComponentToModuleImport(this, this.entityAngularName, this.entityFolderName, this.entityFileName);
+    utils.addComponentToRouting(this, this.entityAngularName, this.entityFileName);
+    utils.addComponentToRoutingImport(this, this.entityAngularName, this.entityFolderName, this.entityFileName);
+    utils.addComponentToMenu(this, this.entityFileName, this.entityTranslationKey);
 }
 
 module.exports = {

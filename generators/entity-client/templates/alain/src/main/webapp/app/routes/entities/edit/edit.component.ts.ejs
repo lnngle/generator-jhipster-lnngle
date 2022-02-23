@@ -19,8 +19,9 @@ export class Entities<%= entityAngularName %>EditComponent implements OnInit {
   for (field of fields.filter(field => !field.hidden)) {
     const fieldName = field.fieldName;
     const fieldType = field.fieldType;
+    const alainType = getFieldTypeOfAlain(fieldType);
 _%> 
-      <%= fieldName %>: { type: '<%= fieldType %>', title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>') },
+      <%= fieldName %>: { type: '<%= alainType %>', title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>') },
 <%_ } _%>
     },
     required: []

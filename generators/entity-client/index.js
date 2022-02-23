@@ -3,6 +3,26 @@ const chalk = require('chalk');
 const EntityClientGenerator = require('generator-jhipster/generators/entity-client');
 const writeFiles = require('./files').writeFiles;
 
+const CommonDBTypes = {
+    STRING: 'String',
+    INTEGER: 'Integer',
+    LONG: 'Long',
+    BIG_DECIMAL: 'BigDecimal',
+    FLOAT: 'Float',
+    DOUBLE: 'Double',
+    UUID: 'UUID',
+    ENUM: 'Enum',
+    BOOLEAN: 'Boolean',
+    LOCAL_DATE: 'LocalDate',
+    ZONED_DATE_TIME: 'ZonedDateTime',
+    BLOB: 'Blob',
+    ANY_BLOB: 'AnyBlob',
+    IMAGE_BLOB: 'ImageBlob',
+    TEXT_BLOB: 'TextBlob',
+    INSTANT: 'Instant',
+    DURATION: 'Duration',
+};
+
 module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
@@ -104,5 +124,29 @@ module.exports = class extends EntityClientGenerator {
     get end() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._end();
+    }
+
+    /**
+     * Convert jhipster field type to type alain field type
+     *
+     * @param {string} jhipsterFieldType - jhipster field type
+     * @returns alainType: string
+     */
+    getFieldTypeOfAlain(jhipsterFieldType) {
+        let alainType = 'string';
+        if ([CommonDBTypes.STRING, CommonDBTypes.UUID, CommonDBTypes.DURATION].includes(jhipsterFieldType)) {
+            alainType = 'string';
+        } else if (jhipsterFieldType === CommonDBTypes.TYPE_BOOLEAN) {
+            alainType = 'boolean';
+        } else if (
+            [CommonDBTypes.INTEGER, CommonDBTypes.BIG_DECIMAL, CommonDBTypes.DOUBLE, CommonDBTypes.FLOAT, CommonDBTypes.LONG].includes(
+                jhipsterFieldType
+            )
+        ) {
+            alainType = 'number';
+        } else if ([CommonDBTypes.LOCAL_DATE, CommonDBTypes.INSTANT, CommonDBTypes.ZONED_DATE_TIME].includes(jhipsterFieldType)) {
+            alainType = 'date';
+        }
+        return alainType;
     }
 };

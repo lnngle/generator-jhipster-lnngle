@@ -14,7 +14,7 @@ import { Entities<%= entityAngularName %>ViewComponent } from './view/view.compo
   templateUrl: './<%= entityFileName %>.component.html'
 })
 export class Entities<%= entityAngularName %>Component {
-  url = RoutesApi.<%= entityFileName %>;
+  url = RoutesApi.<%= entityInstance %>;
   paging = TableConst.paging;
   resultConvert = TableConst.resultConvert;
   searchSchema: SFSchema = {
@@ -23,9 +23,10 @@ export class Entities<%= entityAngularName %>Component {
   for (field of fields.filter(field => !field.hidden)) {
     const fieldName = field.fieldName;
     const fieldType = field.fieldType;
+    const alainType = getFieldTypeOfAlain(fieldType);
 _%> 
       <%= fieldName %>: {
-        type: '<%= fieldType %>',
+        type: '<%= alainType %>',
         title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>')
       },
 <%_ } _%>
@@ -36,7 +37,6 @@ _%>
 <%_
   for (field of fields.filter(field => !field.hidden)) {
     const fieldName = field.fieldName;
-    const fieldType = field.fieldType;
 _%> 
     { title: this.i18n.fanyi('<%= entityTranslationKey %>.form.<%= fieldName %>'), index: '<%= fieldName %>' },
 <%_ } _%>
@@ -84,7 +84,7 @@ _%>
   }
 
   delete(record: any): void {
-    this.http.delete(RoutesApi.demo + record.id).subscribe(res => {
+    this.http.delete(RoutesApi.<%= entityInstance %> + record.id).subscribe(res => {
       this.msgSrv.success(this.i18n.fanyi('global.messages.success.delete'));
       this.st.reload();
     });
