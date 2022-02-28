@@ -29,10 +29,11 @@ function addComponentToModule(generator, entityAngularName) {
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities.module.ts`,
             needle: '// jhipster-needle-add-component-to-module',
+            prettierAware: true,
             splicable: [
-                `,Entities${entityAngularName}Component,`,
+                `Entities${entityAngularName}Component,`,
                 `Entities${entityAngularName}EditComponent,`,
-                `Entities${entityAngularName}ViewComponent`,
+                `Entities${entityAngularName}ViewComponent,`,
             ],
         },
         generator
@@ -59,7 +60,8 @@ function addComponentToRouting(generator, entityAngularName, entityFileName) {
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities-routing.module.ts`,
             needle: '// jhipster-needle-add-component-to-routing',
-            splicable: [`,{ path: '${entityFileName}', component: Entities${entityAngularName}Component },`],
+            prettierAware: true,
+            splicable: [`{ path: '${entityFileName}', component: Entities${entityAngularName}Component },`],
         },
         generator
     );
@@ -70,6 +72,7 @@ function addComponentToRoutingImport(generator, entityAngularName, entityFolderN
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/routes/entities/entities-routing.module.ts`,
             needle: '// jhipster-needle-add-component-to-routing-import',
+            prettierAware: true,
             splicable: [`import { Entities${entityAngularName}Component } from './${entityFolderName}/${entityFileName}.component';`],
         },
         generator
@@ -81,14 +84,15 @@ function addComponentToMenu(generator, entityFileName, entityTranslationKey) {
         {
             file: `${CLIENT_MAIN_SRC_DIR}/app/core/menu/menu-data.service.ts`,
             needle: '// jhipster-needle-add-component-to-menu',
+            prettierAware: true,
             splicable: [
                 generator.stripMargin(
-                    `| ,{
+                    `| {
                     |   text: '${entityTranslationKey}',
                     |   i18n: '${entityTranslationKey}.title',
                     |   icon: { type: 'icon', value: 'menu' },
                     |   link: '/entities/${entityFileName}'
-                    | }`
+                    | },`
                 ),
             ],
         },
@@ -101,6 +105,7 @@ function addEntityMockData(generator, entityInstance) {
         {
             file: '_mock/index.ts',
             needle: '// jhipster-needle-add-entity-mock-data',
+            prettierAware: true,
             splicable: [`export * from './_${entityInstance}';`],
         },
         generator
