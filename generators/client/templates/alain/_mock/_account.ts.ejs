@@ -1,3 +1,4 @@
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { MockRequest, MockStatusError } from '@delon/mock';
 
 const currentUser = { username: 'admin' };
@@ -47,10 +48,16 @@ export const ACCOUNT = {
     const data = req.body;
     if ((data.username === 'admin' && data.password === 'admin') || (data.username === 'user' && data.password === 'user')) {
       currentUser.username = data.username;
-      return {
-        id_token:
-          'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY0NTA2OTM2MH0.mm6rUBOCcBKw93Jr1sQMfaYkn4t33HCnzkgWtPb6Wr1c7O31RR-uChJ6aqAvaXm5VQFXV6v3QZU11iE40T_SPw'
-      };
+      return new HttpResponse({
+        body: {
+          id_token:
+            'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY0OTM4NjkzN30.xvZw883h5QFumcv4mx7vzeS8uBx_1fLMfeh8krGPZvKrisSi_KKu1VVeiTZlchTYdchiFXH5LS2hDBVfoPfHbA',
+        },
+        headers: new HttpHeaders({
+          authorization:
+            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY0OTM4NjkzN30.xvZw883h5QFumcv4mx7vzeS8uBx_1fLMfeh8krGPZvKrisSi_KKu1VVeiTZlchTYdchiFXH5LS2hDBVfoPfHbA',
+        }),
+      });
     } else {
       throw new MockStatusError(401);
     }

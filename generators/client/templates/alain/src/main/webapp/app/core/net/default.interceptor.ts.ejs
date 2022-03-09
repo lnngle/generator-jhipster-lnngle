@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
-  HttpResponseBase
+  HttpResponseBase,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
@@ -33,7 +33,7 @@ const CODEMESSAGE: { [key: number]: string } = {
   500: '服务器发生错误，请检查服务器。',
   502: '网关错误。',
   503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。'
+  504: '网关超时。',
 };
 
 /**
@@ -72,13 +72,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
       return;
     }
-    if (ev instanceof HttpErrorResponse) {
-      const error = ev as HttpErrorResponse;
-      this.notification.error(`请求错误 ${ev.status}`, error.error.title);
-    } else {
-      const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-      this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
-    }
+
+    const errortext = CODEMESSAGE[ev.status] || ev.statusText;
+    this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
   }
 
   /**
@@ -86,7 +82,7 @@ export class DefaultInterceptor implements HttpInterceptor {
    */
   private refreshTokenRequest(): Observable<any> {
     const model = this.tokenSrv.get();
-    return this.http.post(RoutesApi.auth_refresh, null, null, { headers: { refresh_token: model?.['refresh_token'] || '' } });
+    return this.http.post(`/api/auth/refresh`, null, null, { headers: { refresh_token: model?.['refresh_token'] || '' } });
   }
 
   // #region 刷新Token方式一：使用 401 重新刷新 Token
@@ -137,8 +133,8 @@ export class DefaultInterceptor implements HttpInterceptor {
     const token = this.tokenSrv.get()?.token;
     return req.clone({
       setHeaders: {
-        token: `Bearer ${token}`
-      }
+        token: `Bearer ${token}`,
+      },
     });
   }
 
@@ -154,6 +150,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       .pipe(
         filter(() => !this.refreshToking),
         switchMap(res => {
+          console.log(res);
           this.refreshToking = true;
           return this.refreshTokenRequest();
         })
@@ -182,9 +179,6 @@ export class DefaultInterceptor implements HttpInterceptor {
     switch (ev.status) {
       case 200:
         if (ev instanceof HttpResponse) {
-          if (ev.body instanceof Blob) {
-            return of(ev);
-          }
           let total = ev.headers.get('X-Total-Count');
           if (total) {
             return of(new HttpResponse(Object.assign(ev, { body: { data: ev.body, total: total } } as any)));
@@ -197,10 +191,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (this.refreshTokenEnabled && this.refreshTokenType === 're-request') {
           return this.tryRefreshToken(ev, req, next);
         }
-        if (!this.isLoginRequest(req)) {
-          this.toLogin();
-        }
-
+        this.toLogin();
         break;
       case 403:
       case 404:
@@ -208,8 +199,11 @@ export class DefaultInterceptor implements HttpInterceptor {
         // this.goTo(`/exception/${ev.status}?url=${req.urlWithParams}`);
         break;
       default:
-        if (ev instanceof HttpErrorResponse && !this.isLoginRequest(req)) {
-          console.warn('未可知错误', ev);
+        if (ev instanceof HttpErrorResponse) {
+          console.warn(
+            '未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起，请参考 https://ng-alain.com/docs/server 解决跨域问题',
+            ev
+          );
         }
         break;
     }
@@ -218,11 +212,6 @@ export class DefaultInterceptor implements HttpInterceptor {
     } else {
       return of(ev);
     }
-  }
-
-  //登录异常在登录组件统一处理
-  private isLoginRequest(req: HttpRequest<any>): boolean {
-    return req.url.endsWith(RoutesApi.authenticate);
   }
 
   private getAdditionalHeaders(headers?: HttpHeaders): { [name: string]: string } {
