@@ -1,7 +1,17 @@
+<%_ if (skipServer) { _%>
 /*Open when using mock data*/
 export * from './_account';
 export * from './_user';
 // jhipster-needle-add-entity-mock-data
-
+    
 /*Close when mock data is not used*/
 //export {};
+<%_ } else { _%>
+/*Open when using mock data*/
+//export * from './_account';
+//export * from './_user';
+// jhipster-needle-add-entity-mock-data
+        
+/*Close when mock data is not used*/
+export {};
+<%_ } _%>

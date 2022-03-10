@@ -100,13 +100,13 @@ function addComponentToMenu(generator, entityFileName, entityTranslationKey) {
     );
 }
 
-function addEntityMockData(generator, entityInstance) {
+function addEntityMockData(generator, entityInstance, skipServer) {
     jhipsterUtils.rewriteFile(
         {
             file: '_mock/index.ts',
             needle: '// jhipster-needle-add-entity-mock-data',
             prettierAware: true,
-            splicable: [`export * from './_${entityInstance}';`],
+            splicable: [`${skipServer ? '' : '//'}export * from './_${entityInstance}';`],
         },
         generator
     );

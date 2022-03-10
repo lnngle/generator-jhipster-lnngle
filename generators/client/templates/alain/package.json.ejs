@@ -26,7 +26,12 @@
     "clean-www": "rimraf <%= DIST_DIR %>app/{src,<%= BUILD_DIR %>}",
     "webapp:build": "<%= clientPackageManager %> run clean-www && <%= clientPackageManager %> run webapp:build:dev",
     "webapp:build:dev": "ng build --configuration development",
-    "webapp:build:prod": "ng build --configuration production"
+    "webapp:build:prod": "ng build --configuration production",
+    "webapp:dev": "ng serve",
+    "webapp:dev-ssl": "ng serve --ssl",
+    "webapp:dev-verbose": "ng serve --verbose",
+    "webapp:prod": "npm run clean-www && npm run webapp:build:prod",
+    "webapp:test": "npm run test --"
   },
   "dependencies": {
     "@angular/animations": "~13.1.1",

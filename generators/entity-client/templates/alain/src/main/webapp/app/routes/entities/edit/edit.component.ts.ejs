@@ -16,7 +16,7 @@ export class Entities<%= entityAngularName %>EditComponent implements OnInit {
   schema: SFSchema = {
     properties: {
 <%_
-  for (field of fields.filter(field => !field.hidden)) {
+  for (field of fields.filter(field => !field.id)) {
     const fieldName = field.fieldName;
     const fieldType = field.fieldType;
     const alainType = getFieldTypeOfAlain(fieldType);

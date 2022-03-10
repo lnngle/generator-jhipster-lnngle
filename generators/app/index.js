@@ -52,7 +52,7 @@ module.exports = class extends AppGenerator {
         const defaultPhaseFromJHipster = super._prompting();
         return {
             ...defaultPhaseFromJHipster,
-            askForApplicationType: this.jhipsterConfig.skipServer ? undefined : this.prompting.askForApplicationType,
+            askForApplicationType: this.jhipsterConfig.skipServer ? undefined : super._prompting().askForApplicationType,
         };
     }
 
@@ -66,8 +66,8 @@ module.exports = class extends AppGenerator {
         const defaultPhaseFromJHipster = super._composing();
         return {
             ...defaultPhaseFromJHipster,
-            askForTestOpts: this.jhipsterConfig.skipServer ? undefined : this.prompting.askForTestOpts,
-            askForMoreModules: this.jhipsterConfig.skipServer ? undefined : this.prompting.askForMoreModules,
+            askForTestOpts: this.jhipsterConfig.skipServer ? undefined : super._prompting().askForTestOpts,
+            askForMoreModules: this.jhipsterConfig.skipServer ? undefined : super._prompting().askForMoreModules,
         };
     }
 

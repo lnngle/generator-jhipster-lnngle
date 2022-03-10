@@ -85,7 +85,7 @@ function writeFiles() {
     utils.addComponentToRouting(this, this.entityAngularName, this.entityFileName);
     utils.addComponentToRoutingImport(this, this.entityAngularName, this.entityFolderName, this.entityFileName);
     utils.addComponentToMenu(this, this.entityFileName, this.entityTranslationKey);
-    utils.addEntityMockData(this, this.entityInstance);
+    utils.addEntityMockData(this, this.entityInstance, this.skipServer);
 }
 
 module.exports = {
