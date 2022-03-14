@@ -4,7 +4,7 @@
 
 # Introduction
 
-This is a [JHipster](https://www.jhipster.tech/) blueprint, that is meant to be used in a JHipster application.
+A ng-alain blueprint for JHipster. It will use ng-alain as the frontend library.
 
 # Prerequisites
 
