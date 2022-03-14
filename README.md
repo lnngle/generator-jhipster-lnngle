@@ -47,6 +47,15 @@ yarn global upgrade generator-jhipster-lnngle
 To use this blueprint, run the below command
 
 ```bash
+//create an empty directory in which you will create your application
+mkdir myapplication
+cd myapplication
+
+//only generate the frontend
+jhipster --blueprints lnngle --skip-server
+jhipster --blueprints lnngle entity MyEntity --skip-server --single-entity
+
+//generate the frontend and backend
 jhipster --blueprints lnngle
 ```
 
