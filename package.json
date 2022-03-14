@@ -25,6 +25,7 @@
   "dependencies": {
     "chalk": "2.4.1",
     "generator-jhipster": "7.6.0",
+    "lodash": "4.17.21",
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
@@ -39,7 +40,6 @@
     "eslint-plugin-prettier": "3.3.1",
     "fs-extra": "9.1.0",
     "jsdoc": "3.6.6",
-    "lodash": "4.17.21",
     "mocha": "8.3.0",
     "prettier": "",
     "sinon": "9.2.4",

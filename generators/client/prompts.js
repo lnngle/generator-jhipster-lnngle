@@ -1,5 +1,5 @@
 module.exports = {
-    askForClient
+    askForClient,
 };
 
 function askForClient(meta) {
