@@ -1,11 +1,12 @@
 {
   "name": "generator-jhipster-lnngle",
   "version": "0.1.0",
-  "description": "lnngle",
+  "description": "A ng-alain blueprint for JHipster. It will use ng-alain as the frontend library",
   "keywords": [
     "yeoman-generator",
     "jhipster-blueprint",
-    "jhipster-7"
+    "jhipster-7",
+	"ng-alain"
   ],
   "homepage": "https://github.com/lnngle/generator-jhipster-lnngle",
   "author": {

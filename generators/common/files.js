@@ -11,7 +11,6 @@ const commonFiles = {
         {
             templates: [
                 'README.md',
-                'README-zh_CN.md',
                 '.browserslistrc',
                 '.editorconfig',
                 '.eslintignore',
